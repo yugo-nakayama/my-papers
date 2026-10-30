@@ -41,3 +41,4 @@ shopt -u nullglob
 tar -C "${ARCHIVE_DIR}" -czvf "${OUTPUT_TAR}" .
 
 echo "=== Generated ${OUTPUT_TAR} successfully! ==="
+

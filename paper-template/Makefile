@@ -26,3 +26,4 @@ arxiv:
 	# tar.gzに圧縮
 	cd $(ARCHIVE) && tar -czvf ../arxiv_submission.tar.gz *
 	@echo "=== Generated arxiv_submission.tar.gz ==="
+

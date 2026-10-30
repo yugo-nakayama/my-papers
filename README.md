@@ -24,7 +24,7 @@ my-papers/
 
 | ディレクトリ | タイトル / トピック | ステータス | arXiv / 公開先 |
 |---|---|---|---|
-| *(例: paper-2026-svm-asymptotics)* | *SVM Asymptotics Study* | 執筆中 / 投稿済 | [arXiv:xxxx.xxxxx](https://arxiv.org/) |
+| [`paper-sse-svm`](./paper-sse-svm) | Asymptotic Properties of SVM with SSE Model (SSE_SVM) | 執筆 / 公開中 | [yugo-nakayama/SSE_SVM](https://github.com/yugo-nakayama/SSE_SVM) |
 
 ## 使い方
 
@@ -46,3 +46,4 @@ make
 make arxiv
 ```
 `arxiv_submission.tar.gz` が生成されます。arXivの投稿フォームにそのままアップロード可能です。
+
