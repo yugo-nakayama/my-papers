@@ -1,0 +1,25 @@
+# LaTeX temporary files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdf
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.dvi
+*.run.xml
+*-blx.bib
+
+# arXiv upload working directories / archives
+arxiv_upload/
+*.tar.gz
+
+# OS specific files
+.DS_Store
+Thumbs.db
