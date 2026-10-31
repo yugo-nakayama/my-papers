@@ -4,7 +4,6 @@
 *.blg
 *.log
 *.out
-*.pdf
 *.fls
 *.fdb_latexmk
 *.synctex.gz
@@ -15,6 +14,10 @@
 *.dvi
 *.run.xml
 *-blx.bib
+
+# Keep PDFs in drafts/ (tracked by Git LFS), but ignore root/build-generated PDFs if desired:
+# To ignore auto-compiled main.pdf in paper folders:
+# main.pdf
 
 # arXiv upload working directories / archives
 arxiv_upload/
