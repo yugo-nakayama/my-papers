@@ -1,0 +1,21 @@
+\section{Introduction}
+
+Genetic microarrays, medical imaging, and robotics routinely produce high-dimension, low-sample-size (HDLSS) data, in which the dimension far exceeds the sample size. \citet{hall2005} showed that such data acquire a rigid geometry as the dimension diverges, and \citet{ahn2007} proved that this representation holds under mild conditions; see also \citet{jung2009} and the survey of \citet{aoshima2018}. Two lines of work build on this geometry for classification. One develops linear discriminant rules for many variables \citep{bickel2004,fan2008} and distance-based or geometric classifiers \citep{hall2008,chan2009,aoshima2011,aoshima2014,aoshima2015,aoshima2019}. The other studies margin-based methods, including distance-weighted discrimination \citep{marron2007,qiao2010} and the maximal data-piling direction \citep{ahn2010}.
+
+Within the second line, \citet{nakayama2017} derived the asymptotic behavior of the hard-margin linear support vector machine (SVM) \citep{cortes1995,vapnik2000}. They showed that the SVM is consistent under suitable conditions but can be heavily biased when the classes differ in covariance trace or sample size, and proposed a bias-corrected SVM. \citet{nakayama2020} extended that analysis to the Gaussian kernel.
+
+These results assume that every training point comes from one of the two populations. Real training data can contain mislabeled samples or measurements taken under abnormal conditions \citep{frenay2014}. Robust statistics has a long history \citep{huber1964,hampel1986,rousseeuw1987}, and SVM robustness has been studied through influence functions \citep{christmann2004,steinwart2008}, robust losses \citep{wu2007}, robust optimization \citep{xu2009}, and poisoning attacks \citep{biggio2012}. Those analyses either fix the dimension or use conditions that do not reflect HDLSS geometry.
+
+Suppose one class contains a point whose mean $\boldsymbol\mu_0$ lies far from its nominal mean $\boldsymbol\mu_2$. Can the SVM learn the contrast $\boldsymbol\mu_2-\boldsymbol\mu_0$ instead of the population contrast $\boldsymbol\mu_1-\boldsymbol\mu_2$? Because the hard-margin SVM depends only on support vectors, a single outlier may change the classifier completely. A second question is what happens when both classes are contaminated.
+
+Our contributions are as follows.
+\begin{itemize}
+  \item We derive the limit of the centered Gram matrix in the presence of outliers (Lemma~\ref{lem:geometry}).
+  \item For one-sided contamination, we solve the limiting dual problem in closed form and show that the outliers enter only through one effective distance (Lemma~\ref{lem:reduction} and Theorem~\ref{thm:one-sided}).
+  \item We identify a sharp threshold below which the contaminated class loses all inlier support and obtain the corresponding critical number of outliers (Corollary~\ref{cor:allocation}).
+  \item We prove convergence of the actual dual value, dual allocation, intercept, and discriminant function, and derive limiting misclassification rates (Theorems~\ref{thm:transfer-value}--\ref{thm:discriminant} and Corollary~\ref{cor:misclass-one}).
+  \item For two-sided contamination, we solve the KKT system, identify its multiplier with the limiting intercept, and show that at most one class can fail. Symmetric contamination cancels the intercept shift (Theorem~\ref{thm:two-sided} and Corollaries~\ref{cor:breakdown-two}--\ref{cor:symmetric}).
+  \item Seven simulation studies check the finite-dimensional agreement with these limits (Section~\ref{sec:simulations}).
+\end{itemize}
+
+All algebraic steps use only linear algebra, probability, and convex optimization \citep{boyd2004}.

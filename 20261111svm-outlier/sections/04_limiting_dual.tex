@@ -1,0 +1,85 @@
+\section{The limiting dual problem}
+Equation~\eqref{eq:centered-dual} and Lemma~\ref{lem:geometry} motivate
+\begin{equation}\label{eq:Ltilde}
+\widetilde L(\boldsymbol\alpha)=\one^\T\boldsymbol\alpha-\frac12\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha,
+\qquad \boldsymbol\alpha\in\cC.
+\end{equation}
+For $\boldsymbol\alpha\in\cC$, define
+\[
+a=\sum_{j\in I_1}\alpha_j,\qquad
+b=\sum_{j\in I_2}\alpha_j,\qquad
+s=\sum_{k\in O}\alpha_k.
+\]
+The equality constraint is $-a+b+s=0$, so $s=a-b$. Thus $(a,b)$ ranges over
+$\cD=\{(a,b):a\ge b\ge0\}$ and $\one^\T\boldsymbol\alpha=2a$.
+
+\subsection{A weighted Cauchy--Schwarz inequality}
+\begin{lemma}\label{lem:weighted-cs}
+Let $w_1,\ldots,w_r>0$. For real $z_1,\ldots,z_r$ with $\sum_jz_j=S$,
+\[
+\sum_{j=1}^{r}w_jz_j^2\ge {S^2\over\sum_jw_j^{-1}},
+\]
+with equality if and only if $z_j=Sw_j^{-1}/\sum_lw_l^{-1}$.
+\end{lemma}
+\begin{proof}
+Apply Cauchy--Schwarz to $\sqrt{w_j}z_j$ and $1/\sqrt{w_j}$:
+$S^2\le(\sum_jw_jz_j^2)(\sum_jw_j^{-1})$. The equality condition gives the stated allocation.
+\end{proof}
+
+\subsection{Reduction to two variables}
+Put $p=\Delta/4$ and define
+\begin{equation}\label{eq:QF}
+Q(a,b)=p(a+b)^2+\tau_1a^2+\tau_2b^2+\kappa(a-b)^2,
+\qquad
+F(a,b)=2a-\frac12Q(a,b).
+\end{equation}
+\begin{lemma}[Reduction]\label{lem:reduction}
+For every $\boldsymbol\alpha\in\cC$ with classwise sums $(a,b)$,
+$\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha\ge Q(a,b)$. Moreover,
+\[
+\max_{\boldsymbol\alpha\in\cC}\widetilde L(\boldsymbol\alpha)
+=
+\max_{(a,b)\in\cD}F(a,b),
+\]
+and, for each $(a,b)\in\cD$, equality is attained by
+\begin{equation}\label{eq:allocation}
+\alpha_j={a\over n_1}\ (j\in I_1),\qquad
+\alpha_j={b\over n_2}\ (j\in I_2),\qquad
+\alpha_k=(a-b){\kappa\over D_k}\ (k\in O).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The block structure in \eqref{eq:Gtilde} gives
+\[
+\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha
+={\Delta\over4}\Big(\sum_{j\in I_1\cup I_2}\alpha_j\Big)^2
++\tr(\boldsymbol\Sigma_1)\sum_{j\in I_1}\alpha_j^2
++\tr(\boldsymbol\Sigma_2)\sum_{j\in I_2}\alpha_j^2
++\sum_{k\in O}D_k\alpha_k^2.
+\]
+Lemma~\ref{lem:weighted-cs} minimizes the three diagonal sums, for fixed $(a,b,s)$, at the allocation \eqref{eq:allocation}; the lower bounds are $\tau_1a^2$, $\tau_2b^2$, and $\kappa s^2$. Since $s=a-b$, the result follows.
+\end{proof}
+
+Writing $\boldsymbol z=(a,b)^\T$,
+\[
+Q(a,b)=\boldsymbol z^\T\boldsymbol M\boldsymbol z,
+\qquad
+\boldsymbol M=
+\begin{pmatrix}p+\tau_1+\kappa&p-\kappa\\p-\kappa&p+\tau_2+\kappa\end{pmatrix}.
+\]
+Its determinant is
+\begin{equation}\label{eq:detM}
+\det\boldsymbol M=\kappa\Delta_*+E,
+\qquad
+E={\Delta\over4}(\tau_1+\tau_2)+\tau_1\tau_2.
+\end{equation}
+Hence $\boldsymbol M$ is positive definite and $F(\boldsymbol z)=\boldsymbol g^\T\boldsymbol z-\boldsymbol z^\T\boldsymbol M\boldsymbol z/2$, with $\boldsymbol g=(2,0)^\T$, is strictly concave.
+
+\subsection{The clean case}
+\begin{proposition}[\citealp{nakayama2017}]\label{prop:clean}
+Without outliers, or with $s=0$, the maximum equals $2/\Delta_*$ and is attained at $a=b=2/\Delta_*$, with $\alpha_j=2/(\Delta_*n_i)$ for $j\in I_i$.
+\end{proposition}
+\begin{proof}
+With $b=a$, $Q(a,a)=\Delta_*a^2$ and
+$F(a,a)=2a-\Delta_*a^2/2$; completing the square proves the claim.
+\end{proof}

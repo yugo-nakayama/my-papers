@@ -1,0 +1,6 @@
+{
+  "seed": 20261029,
+  "quick": true,
+  "numpy": "2.5.4",
+  "experiments": "1--7"
+}

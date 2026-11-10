@@ -1,0 +1,89 @@
+\section{One-sided contamination: the dual problem}
+
+The symbols $a^\circ$ and $b^\circ$ used below denote the coordinates of the unconstrained stationary point
+\begin{equation}\label{eq:circ-def}
+\binom{a^\circ}{b^\circ}:=\boldsymbol M^{-1}\boldsymbol g,
+\end{equation}
+whereas $(\astar,\bstar)$ denotes the constrained maximizer of $F$ over $\cD$. This distinction matters when $b^\circ<0$.
+
+\begin{theorem}[Exact solution of the limiting dual]\label{thm:one-sided}
+Let $E$ be defined in \eqref{eq:detM}.
+\begin{enumerate}
+\item[(i)] If $\kappa\ge\Delta/4$, the unique maximizer is the interior point $(\astar,\bstar)=(a^\circ,b^\circ)$, where
+\begin{equation}\label{eq:one-int}
+\astar={2(\Delta/4+\tau_2+\kappa)\over\kappa\Delta_*+E},\qquad
+\bstar={2(\kappa-\Delta/4)\over\kappa\Delta_*+E},\qquad
+\sstar=\astar-\bstar={2(\Delta/2+\tau_2)\over\kappa\Delta_*+E}.
+\end{equation}
+The maximum is
+\begin{equation}\label{eq:F-one}
+F_{\max}=\astar={2\over\Delta_*}+{2(\Delta/2+\tau_2)^2\over\Delta_*(\kappa\Delta_*+E)}.
+\end{equation}
+\item[(ii)] If $\kappa<\Delta/4$, the unique maximizer lies on the boundary:
+\begin{equation}\label{eq:one-boundary}
+\bstar=0,
+\qquad
+\astar=\sstar={8\over\Delta+4\tau_1+4\kappa},
+\qquad
+F_{\max}={8\over\Delta+4\tau_1+4\kappa}.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The unconstrained stationarity equation is $\boldsymbol M\boldsymbol z=\boldsymbol g$. Direct inversion gives
+\[
+\boldsymbol M^{-1}={1\over\kappa\Delta_*+E}
+\begin{pmatrix}p+\tau_2+\kappa&\kappa-p\\\kappa-p&p+\tau_1+\kappa\end{pmatrix},
+\]
+which yields \eqref{eq:one-int}. The constraint $a\ge b$ is always strict, whereas $b^\circ\ge0$ exactly when $\kappa\ge p=\Delta/4$. Strict concavity then proves part (i), and $F(\boldsymbol z^\circ)=\boldsymbol g^\T\boldsymbol z^\circ/2=a^\circ$. Expanding $a^\circ-2/\Delta_*$ gives \eqref{eq:F-one}.
+
+If $\kappa<p$, the unconstrained point is infeasible. On $b=0$,
+$F(a,0)=2a-(p+\tau_1+\kappa)a^2/2$, whose maximizer is \eqref{eq:one-boundary}. At that point
+$\nabla F=(0,-(p-\kappa)\astar)^\T$, so
+$\nabla F^\T(\boldsymbol z-\boldsymbol z^\star)\le0$ for every $\boldsymbol z\in\cD$. Concavity proves global optimality and strict concavity proves uniqueness.
+\end{proof}
+
+At the optimum, both regimes satisfy
+\begin{equation}\label{eq:identity}
+p(\astar+\bstar)+\tau_1\astar+\kappa\sstar=2.
+\end{equation}
+
+\begin{corollary}[When are outliers harmless?]\label{cor:harmless}
+Let $R=F_{\max}/(2/\Delta_*)$. Then $R>1$. In the interior regime,
+\[
+R=1+{(\Delta/2+\tau_2)^2\over\kappa\Delta_*+E}.
+\]
+Consequently, $R\to1$ if and only if $(\kappa\Delta_*+E)/(\Delta/2+\tau_2)^2\to\infty$; in particular, $\kappa/\Delta_*\to\infty$ is sufficient. For $m$ outliers at a common distance $D$, this sufficient condition is $D/(m\Delta_*)\to\infty$.
+\end{corollary}
+At the hard-margin optimum, $\lVert\widehat{\boldsymbol w}\rVert^2=2\max L$; therefore the outliers shrink the margin by the factor $R^{-1/2}$.
+
+\begin{corollary}[Allocation, breakdown, and critical number]\label{cor:allocation}
+If $\kappa\ge\Delta/4$, the outliers carry fraction
+\[
+{\sstar\over\astar}={\Delta/2+\tau_2\over\Delta/4+\tau_2+\kappa}
+\]
+of the class-2 mass, and outlier $k$ receives $\alpha_k=\sstar\kappa/D_k$. If $\kappa<\Delta/4$, then $\bstar=0$: every class-2 inlier has zero limiting weight. If $D_1=\cdots=D_m=D$, this collapse occurs exactly when $m>4D/\Delta$.
+\end{corollary}
+
+\begin{remark}
+The threshold $\kappa=\Delta/4$ compares the effective outlier distance from the midpoint with the squared distance of the class-2 mean from that midpoint. Below the threshold, only outliers remain as class-2 support vectors. Because $D_k$ includes $\tr(\boldsymbol\Sigma_{0k})$, a noisy outlier can remain effectively distant even when its mean is at the midpoint.
+\end{remark}
+
+\begin{theorem}[Transfer of the optimal value]\label{thm:transfer-value}
+Under (A1)--(A3),
+\[
+\max_{\boldsymbol\alpha\in\cC}L(\boldsymbol\alpha)
+=F_{\max}\{1+\op(1)\}.
+\]
+\end{theorem}
+\begin{proof}
+Lemma~\ref{lem:geometry}, nonnegativity of $\boldsymbol\alpha$, and Lemma~\ref{lem:reduction} imply
+$|\boldsymbol\alpha^\T\boldsymbol R\boldsymbol\alpha|
+\le\epsilon\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha$ uniformly on $\cC$, with $\epsilon=\op(1)$; (A3) supplies the uniform constant needed to compare the outlier-diagonal and inlier terms. On $\{\epsilon<1\}$,
+\[
+\one^\T\boldsymbol\alpha-\frac{1+\epsilon}{2}\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha
+\le L(\boldsymbol\alpha)\le
+\one^\T\boldsymbol\alpha-\frac{1-\epsilon}{2}\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha.
+\]
+Because $\cC$ is a cone, rescaling $\boldsymbol\alpha$ shows that the maxima of the two bounding objectives are $F_{\max}/(1+\epsilon)$ and $F_{\max}/(1-\epsilon)$. The result follows by squeezing.
+\end{proof}

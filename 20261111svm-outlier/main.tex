@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\IfFileExists{mathtools.sty}{\usepackage{mathtools}}{\PackageWarning{main}{mathtools not installed; continuing with amsmath fallback}}
+\usepackage[authoryear,round]{natbib}
+\usepackage{booktabs,graphicx,array,tabularx}
+\IfFileExists{caption.sty}{\usepackage[font=small,labelfont=bf,skip=8pt]{caption}}{}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\op}{o_{P}}
+\newcommand{\Ohp}{O_{P}}
+\newcommand{\astar}{a^{\star}}
+\newcommand{\bstar}{b^{\star}}
+\newcommand{\sstar}{s^{\star}}
+\newcommand{\ccirc}{c^{\circ}}
+
+\title[Outliers and the Hard-Margin Linear SVM in HDLSS]{Outliers and the Hard-Margin Linear SVM\\in High-Dimension, Low-Sample-Size Settings}
+\author{Yugo Nakayama}
+\date{}
+
+% The affiliation is intentionally placed directly below the author rather than
+% in the AMS end-matter address block.
+\makeatletter
+\let\original@setauthors\@setauthors
+\def\@setauthors{%
+  \original@setauthors
+  \vspace{-0.1em}\begin{center}\small\mdseries Independent researcher\end{center}%
+}
+\def\@setaddresses{}
+\makeatother
+
+\begin{document}
+\begin{abstract}
+We study how outliers affect the hard-margin linear support vector machine when the dimension grows while the sample sizes remain fixed. For one-sided contamination, the centered Gram matrix converges to a constant inlier block plus an outlier-diagonal component, and the limiting dual problem has a closed-form solution. All outliers act through one effective distance. This representation yields explicit thresholds for loss of inlier support, margin shrinkage, intercept displacement, and asymptotic misclassification. We then treat contamination in both classes. The limiting intercept is the multiplier of the class-balance constraint, and the two classes pull it in opposite directions. Consequently, at most one class can collapse or be asymptotically misclassified, whereas symmetric contamination leaves the limiting discriminant function unchanged even though the margin shrinks. Seven numerical experiments verify the dual allocation, phase transitions, and discriminant limits.
+\end{abstract}
+
+\maketitle
+\noindent\textbf{Keywords:} Breakdown; discriminant function; geometric representation; HDLSS; outlier; support vector machine.
+
+\input{sections/01_intro}
+\input{sections/02_setup}
+\input{sections/03_geometry}
+\input{sections/04_limiting_dual}
+\input{sections/05_one_sided}
+\input{sections/06_discriminant}
+\input{sections/07_two_sided}
+\input{sections/08_simulations}
+\input{sections/09_discussion}
+
+\section*{Acknowledgments}
+Parts of the drafting and technical editing of this manuscript were assisted by large language models, including Anthropic's Claude Opus 5.5. The author takes full responsibility for the correctness of all mathematical statements, proofs, and numerical results.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

@@ -1,0 +1,100 @@
+\section{Numerical experiments}\label{sec:simulations}
+All experiments use $n_1=n_2=10$ and $\boldsymbol\Sigma_1=\boldsymbol\Sigma_2=\boldsymbol I_d$, so $\tau_1=\tau_2=d/10$. The first $d/2$ entries of $\boldsymbol\mu$ are equal and the remaining entries are zero, with $\lVert\boldsymbol\mu\rVert^2=\Delta$. Each outlier has covariance $\sigma_0^2\boldsymbol I_d$ and an offset supported on a separate block of the last $d/2$ coordinates, so (A2) holds. The offset norm is chosen to attain the target effective distance.
+
+The computation solves the hard-margin dual directly. Numerically, it optimizes $\boldsymbol\gamma=d\boldsymbol\alpha$ against the normalized signed Gram matrix; this is equivalent to using a soft-margin upper bound so large that it is never active. The complete implementation, fixed seed, raw CSV files, software versions, and figure-generation code are included in \texttt{experiments/run\_experiments.py} and \texttt{results/}.
+
+\paragraph{Why the replication counts are adequate here.}
+The experiments are validation checks of deterministic asymptotic formulas, not Monte Carlo estimates of an unknown scientific effect. Each experiment compares an entire parameter grid against a prespecified curve or phase boundary, and the predicted changes are large (including exactly zero limiting inlier mass and near-unit changes in error probability). Ten replications are used for Experiments 1 and 4, twenty for the convergence-rate study, eight for Experiments 5 and 6, and six for Experiments 3 and 7. These counts are intentionally modest because one replication contains up to forty thousand coordinates and the aim is to check structural agreement rather than to report high-precision simulation estimates. Reproducibility is provided by a fixed seed, and Experiment 2 additionally reports Monte Carlo standard errors in its CSV output. The conclusions are based on agreement across grid points and across seven distinct checks, not on significance testing at a single point.
+
+\subsection{Experiment 1: dual value and weight allocation}
+Set $d=20{,}000$, $\Delta=10{,}000$, and hence $\Delta_*=14{,}000$. Add $m\in\{1,3\}$ outliers with $\sigma_0=0.2$ and choose their common distance so that $\kappa=r\Delta_*$ for $r\in\{0.1,0.3,1,3,10,30\}$. Breakdown occurs at $\kappa/\Delta_*\approx0.179$. Table~\ref{tab:exp1} and Figure~\ref{fig:exp1} compare ten-replication means with Theorem~\ref{thm:one-sided}. The two values of $m$ produce essentially the same results, as predicted by the reduction to $\kappa$.
+\begin{table}[htbp]
+\centering\small
+\caption{Experiment 1: simulated and theoretical dual quantities, multiplied by $d$.}
+\label{tab:exp1}
+\resizebox{\textwidth}{!}{\input{results/experiment1_table.tex}}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.72\textwidth]{experiment1.pdf}
+\caption{Experiment 1: dual optimum against the effective-distance ratio. The vertical dotted line is the breakdown threshold.}
+\label{fig:exp1}
+\end{figure}
+
+\subsection{Experiment 2: convergence in dimension}
+Vary $d$ from $1{,}000$ to $40{,}000$, set $\Delta=d/2$, $m=1$, and $\kappa=\Delta_*$. Over twenty replications, record the mean absolute relative errors of the dual value and class-2 inlier mass. Alongside Gaussian noise, use a standardized $t_5$ distribution. Figure~\ref{fig:exp2} shows decay under both distributions at the order suggested by the Chebyshev bounds in Lemma~\ref{lem:geometry}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.72\textwidth]{experiment2.pdf}
+\caption{Experiment 2: mean absolute relative errors against $d$ on log--log axes.}
+\label{fig:exp2}
+\end{figure}
+
+\subsection{Experiment 3: critical number of outliers}
+Set $d=20{,}000$, $\Delta=10{,}000$, and give every outlier common effective distance $D=2\Delta$. Then $\kappa=D/m$, and Corollary~\ref{cor:allocation} predicts collapse for $m>8$. Table~\ref{tab:exp3}, based on six replications, shows the class-2 inlier mass approaching zero at the predicted boundary.
+\begin{table}[htbp]
+\centering\small
+\caption{Experiment 3: dependence on the number of outliers at fixed individual effective distance.}
+\label{tab:exp3}
+\resizebox{\textwidth}{!}{\input{results/experiment3_table.tex}}
+\end{table}
+
+\subsection{Experiment 4: discriminant function and misclassification}
+Set $d=20{,}000$, $\Delta=3{,}000$, and $\tau=2{,}000$, so $\Delta_*=7{,}000$ and $\kappa_c/\Delta_*\approx0.19$. Add one outlier with $\sigma_0=0.05$, vary $\kappa/\Delta_*$ from $0.03$ to $5$, and evaluate 100 test scores per class in each of ten replications. Table~\ref{tab:exp4} and Figure~\ref{fig:exp4} show the predicted loss of class 1 near $\kappa_c$, while class 2 remains correctly classified.
+\begin{table}[htbp]
+\centering\small
+\caption{Experiment 4: test-score means and misclassification rates.}
+\label{tab:exp4}
+\resizebox{\textwidth}{!}{\input{results/experiment4_table.tex}}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.92\textwidth]{experiment4.pdf}
+\caption{Experiment 4. Left: limiting and simulated discriminant values. Right: misclassification rates. The vertical dotted line is the theoretical transition.}
+\label{fig:exp4}
+\end{figure}
+
+\subsection{Experiment 5: one-sided versus symmetric contamination}
+Repeat Experiment 4 with eight replications, comparing the one-sided design with a second, mirror outlier in class 1 having the same effective distance. Under symmetric contamination, the discriminant remains at the clean limit even when the outliers carry most of the dual mass; Figure~\ref{fig:exp5} illustrates the cancellation in Corollary~\ref{cor:symmetric}.
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Experiment 5: one-sided and symmetric two-sided contamination.}
+\label{tab:exp5}
+\resizebox{\textwidth}{!}{\input{results/experiment5_combined_table.tex}}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.92\textwidth]{experiment5.pdf}
+\caption{Experiment 5. Left: discriminant values. Right: misclassification rates. Separate axes and reserved caption spacing prevent graphical elements from touching the caption.}
+\label{fig:exp5}
+\end{figure}
+
+\subsection{Experiment 6: asymmetric two-sided contamination}
+Fix the class-2 outlier at $\kappa_2/\Delta_*=0.06$ and vary $\kappa_1/\Delta_*$. Corollary~\ref{cor:misclass-two} predicts three regions: loss of class 2 for very small $\kappa_1$, a central region in which both classes are correct, and loss of class 1 for larger $\kappa_1$. Table~\ref{tab:exp6}, Figure~\ref{fig:exp6}, and the phase diagram in Figure~\ref{fig:phase} confirm this movement of the intercept.
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Experiment 6: asymmetric two-sided contamination.}
+\label{tab:exp6}
+\resizebox{\textwidth}{!}{\input{results/experiment6_table.tex}}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.92\textwidth]{experiment6.pdf}
+\caption{Experiment 6. Left: discriminants and limiting intercept. Right: misclassification rates.}
+\label{fig:exp6}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.68\textwidth]{phase_diagram.pdf}
+\caption{Phase diagram in the $(\kappa_1,\kappa_2)$ plane. Solid curves are misclassification boundaries, dashed curves are support-collapse boundaries, and colored points are Experiment 6 outcomes.}
+\label{fig:phase}
+\end{figure}
+
+\subsection{Experiment 7: dual allocation in all three regimes}
+Finally, set $d=20{,}000$, $\Delta=10{,}000$, and $\sigma_0=0.1$, and select ten pairs $(\kappa_1,\kappa_2)$ covering N, B1, and B2. Six-replication averages in Table~\ref{tab:exp7} agree with Theorem~\ref{thm:two-sided} and select the regime predicted by Corollary~\ref{cor:breakdown-two}.
+\begin{table}[p]
+\centering\scriptsize
+\caption{Experiment 7: simulated and theoretical dual allocations, multiplied by $d$.}
+\label{tab:exp7}
+\resizebox{\textwidth}{!}{\input{results/experiment7_table.tex}}
+\end{table}

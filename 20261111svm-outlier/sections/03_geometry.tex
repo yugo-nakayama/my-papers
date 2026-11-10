@@ -1,0 +1,92 @@
+\section{Translation invariance and geometric representation}
+
+\begin{lemma}[Translation invariance]\label{lem:translation}
+For any $\boldsymbol c\in\R^d$ and $\boldsymbol\alpha$ satisfying $\boldsymbol t^\T\boldsymbol\alpha=0$,
+\[
+\sum_{j,k}\alpha_j\alpha_k t_jt_k\boldsymbol x_j^\T\boldsymbol x_k
+=
+\sum_{j,k}\alpha_j\alpha_k t_jt_k(\boldsymbol x_j-\boldsymbol c)^\T(\boldsymbol x_k-\boldsymbol c).
+\]
+\end{lemma}
+\begin{proof}
+Bilinearity gives
+\[
+\sum_{j,k}\alpha_j\alpha_kt_jt_k\boldsymbol x_j^\T\boldsymbol x_k
+=\left\lVert\sum_j\alpha_jt_j\boldsymbol x_j\right\rVert^2.
+\]
+Moreover,
+\[
+\sum_j\alpha_jt_j\boldsymbol x_j
+=\sum_j\alpha_jt_j(\boldsymbol x_j-\boldsymbol c)
++\left(\sum_j\alpha_jt_j\right)\boldsymbol c
+=\sum_j\alpha_jt_j(\boldsymbol x_j-\boldsymbol c).
+\]
+\end{proof}
+
+Take $\boldsymbol c=\boldsymbol\mu_*$ and define the signed centered Gram matrix $\boldsymbol G=(G_{jk})$ by
+\[
+G_{jk}=t_jt_k(\boldsymbol x_j-\boldsymbol\mu_*)^\T(\boldsymbol x_k-\boldsymbol\mu_*).
+\]
+Then
+\begin{equation}\label{eq:centered-dual}
+L(\boldsymbol\alpha)=\one^\T\boldsymbol\alpha-\frac12\boldsymbol\alpha^\T\boldsymbol G\boldsymbol\alpha,
+\qquad \boldsymbol\alpha\in\cC.
+\end{equation}
+Its deterministic leading term is
+\begin{equation}\label{eq:Gtilde}
+\widetilde G_{jk}=
+\begin{cases}
+\Delta/4+\delta_{jk}\tr(\boldsymbol\Sigma_i),&j,k\in I_1\cup I_2,\ j\in I_i,\\
+D_k\delta_{jk},&j,k\in O,\\
+0,&\text{otherwise},
+\end{cases}
+\end{equation}
+where $\delta_{jk}$ is the Kronecker delta.
+
+\begin{lemma}[Geometric representation with outliers]\label{lem:geometry}
+Assume (A1)--(A2), and let $\boldsymbol R=\boldsymbol G-\widetilde{\boldsymbol G}$. Then
+\[
+\epsilon_1:=\max_{(j,k)\notin O\times O}{|R_{jk}|\over\Delta_*}=\op(1),
+\qquad
+\epsilon_2:=\max_{k\in O}{|R_{kk}|\over D_k}=\op(1).
+\]
+\end{lemma}
+\begin{proof}
+Put $\boldsymbol u=-\boldsymbol\mu/2$. For every inlier,
+$t_j(\boldsymbol x_j-\boldsymbol\mu_*)=\boldsymbol u+t_j\boldsymbol\varepsilon_j$,
+whereas for $k\in O$,
+$t_k(\boldsymbol y_k-\boldsymbol\mu_*)=\boldsymbol\nu_k+\boldsymbol\eta_k$.
+Also $\lVert\boldsymbol u\rVert^2=\Delta/4$.
+
+For distinct inliers $j\in I_i$ and $k\in I_l$,
+\[
+R_{jk}=t_j\boldsymbol u^\T\boldsymbol\varepsilon_j
++t_k\boldsymbol u^\T\boldsymbol\varepsilon_k
++t_jt_k\boldsymbol\varepsilon_j^\T\boldsymbol\varepsilon_k.
+\]
+The three terms have mean zero. Their second moments are controlled by
+$\boldsymbol\mu^\T\boldsymbol\Sigma_i\boldsymbol\mu/4$,
+$\boldsymbol\mu^\T\boldsymbol\Sigma_l\boldsymbol\mu/4$, and
+$\tr(\boldsymbol\Sigma_i\boldsymbol\Sigma_l)$; Chebyshev's inequality and (A1) therefore give $R_{jk}/\Delta_*=\op(1)$.
+For an inlier diagonal,
+\[
+R_{jj}=2t_j\boldsymbol u^\T\boldsymbol\varepsilon_j+
+\{\lVert\boldsymbol\varepsilon_j\rVert^2-\tr(\boldsymbol\Sigma_i)\},
+\]
+and (A1) gives the same conclusion.
+
+For $j\in I_i$ and $k\in O$,
+\[
+R_{jk}=G_{jk}=-{\boldsymbol\mu^\T\boldsymbol\nu_k\over2}
+-{\boldsymbol\mu^\T\boldsymbol\eta_k\over2}
++t_j\boldsymbol\varepsilon_j^\T\boldsymbol\nu_k
++t_j\boldsymbol\varepsilon_j^\T\boldsymbol\eta_k.
+\]
+Assumption (A2) makes the deterministic term negligible relative to $\Delta_*$ and bounds the second moments of the other terms. For $k\ne l$ in $O$,
+$R_{kl}=\boldsymbol\nu_k^\T\boldsymbol\nu_l+\boldsymbol\nu_k^\T\boldsymbol\eta_l+\boldsymbol\nu_l^\T\boldsymbol\eta_k+\boldsymbol\eta_k^\T\boldsymbol\eta_l$, which is again $\op(\Delta_*)$ by (A2). Finally,
+\[
+R_{kk}=2\boldsymbol\nu_k^\T\boldsymbol\eta_k+
+\{\lVert\boldsymbol\eta_k\rVert^2-\tr(\boldsymbol\Sigma_{0k})\}=\op(D_k).
+\]
+Because $N$ is fixed, a union bound over the finitely many entries proves both maxima.
+\end{proof}

@@ -1,0 +1,128 @@
+\section{Two-sided contamination}\label{sec:two-sided}
+We now allow both classes to contain outliers. Let $O_1$ and $O_2$ index outliers labeled as class 1 and class 2, with $m_i=|O_i|$ fixed. For every outlier, retain
+$\boldsymbol\nu_k=\boldsymbol\mu_{0k}-\boldsymbol\mu_*$ and
+$D_k=\lVert\boldsymbol\nu_k\rVert^2+\tr(\boldsymbol\Sigma_{0k})$, and define
+\begin{equation}\label{eq:kappai}
+\kappa_i=\left(\sum_{k\in O_i}D_k^{-1}\right)^{-1},
+\qquad \kappa_i=\infty\text{ if }O_i=\varnothing.
+\end{equation}
+Assume (A2) for all outliers and add:
+\begin{description}
+\item[(A4)] For each $i$ with $O_i\ne\varnothing$,
+$0<\liminf\kappa_i/\Delta_*\le\limsup\kappa_i/\Delta_*<\infty$.
+\end{description}
+The sign flip for a class-1 outlier changes only negligible off-diagonal terms, so Lemma~\ref{lem:geometry} remains valid.
+
+\subsection{Reduction and KKT system}
+Let $a,b,s_1,s_2$ be the total dual masses on $I_1,I_2,O_1,O_2$. The balance constraint is
+$-a-s_1+b+s_2=0$. Put
+$A=a+s_1=b+s_2$, so $\one^\T\boldsymbol\alpha=2A$.
+
+\begin{lemma}[Reduction to four variables]\label{lem:four}
+Let
+\[
+Q_2(a,b,s_1,s_2)=p(a+b)^2+\tau_1a^2+\tau_2b^2+\kappa_1s_1^2+\kappa_2s_2^2.
+\]
+Every feasible $\boldsymbol\alpha$ satisfies
+$\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha\ge Q_2$, with equality when mass is spread evenly within $I_i$ and as $\alpha_k=s_i\kappa_i/D_k$ within $O_i$. Consequently, the limiting maximum is the maximum of
+$F_2=a+b+s_1+s_2-Q_2/2$ over
+\[
+\cD_2=\{a,b,s_1,s_2\ge0:a+s_1=b+s_2\}.
+\]
+\end{lemma}
+The proof repeats Lemma~\ref{lem:reduction} group by group.
+
+Attach multiplier $c$ to $a+s_1-b-s_2=0$ and put $P=p(a+b)$. The KKT system is
+\begin{align}\label{eq:kkt-two}
+P+\tau_1a&=1+c &&(a>0),& P+\tau_1a&\ge1+c&&(a=0),\nonumber\\
+P+\tau_2b&=1-c &&(b>0),& P+\tau_2b&\ge1-c&&(b=0),\\
+\kappa_1s_1&=1+c,&&& \kappa_2s_2&=1-c.&&\nonumber
+\end{align}
+At the unique maximizer, $-1<c<1$, both $s_i$ are positive, and $a,b$ cannot both vanish.
+
+Write
+\begin{equation}\label{eq:two-shorthands}
+H=\kappa_1\kappa_2\Delta_*+(\kappa_1+\kappa_2)E,
+\quad
+\rho_i=\left({1\over p+\tau_i}+{1\over\kappa_i}\right)^{-1},
+\quad
+\beta_i(x)={px\over x+p+\tau_{3-i}}.
+\end{equation}
+
+\begin{theorem}[Exact solution under two-sided contamination]\label{thm:two-sided}
+Let $(\astar,\bstar,s_1^*,s_2^*)$ maximize $F_2$, let $c^*$ be the multiplier, and let $P^*=p(\astar+\bstar)$.
+\begin{description}
+\item[(N)] If $\kappa_1\ge\beta_1(\kappa_2)$ and $\kappa_2\ge\beta_2(\kappa_1)$, then
+\begin{align}
+ c^*&={\kappa_1\kappa_2(\tau_1-\tau_2)+(\kappa_1-\kappa_2)E\over H},
+& P^*&={ (\Delta/2)(2\kappa_1\kappa_2+\kappa_1\tau_2+\kappa_2\tau_1)\over H},\nonumber\\
+ \astar&={1+c^*-P^*\over\tau_1},&
+ \bstar&={1-c^*-P^*\over\tau_2},\nonumber\\
+ s_1^*&={1+c^*\over\kappa_1},&
+ s_2^*&={1-c^*\over\kappa_2}.\label{eq:Nsol}
+\end{align}
+with
+\[
+\max F_2={2\{(\kappa_1+p+\tau_1)(\kappa_2+p+\tau_2)-p^2\}\over H}.
+\]
+\item[(B2)] If $\kappa_2<\beta_2(\kappa_1)$, then $\bstar=0$ and
+\[
+c^*={\rho_1-\kappa_2\over\rho_1+\kappa_2},\quad
+\astar={1+c^*\over p+\tau_1},\quad
+s_1^*={1+c^*\over\kappa_1},\quad
+s_2^*={1-c^*\over\kappa_2},\quad
+\max F_2={2\over\rho_1+\kappa_2}.
+\]
+\item[(B1)] If $\kappa_1<\beta_1(\kappa_2)$, exchange the class labels in (B2): $\astar=0$, $c^*=-(\rho_2-\kappa_1)/(\rho_2+\kappa_1)$, $\bstar=(1-c^*)/(p+\tau_2)$, and $\max F_2=2/(\rho_2+\kappa_1)$.
+\end{description}
+The B1 and B2 conditions are mutually exclusive.
+\end{theorem}
+\begin{proof}
+In regime N, \eqref{eq:kkt-two} gives
+$a=(1+c-P)/\tau_1$, $b=(1-c-P)/\tau_2$, $s_1=(1+c)/\kappa_1$, and $s_2=(1-c)/\kappa_2$. Substitution into $P=p(a+b)$ and the balance equation yields the displayed linear solution for $(c,P)$ and hence \eqref{eq:Nsol}. Lemma~\ref{lem:quad-facts} gives the maximum from half the total mass. The nonnegativity conditions reduce to the two stated inequalities.
+
+In B2, set $b=0$. Then $P=pa$, $(p+\tau_1)a=1+c$, and balance gives $(1+c)/\rho_1=(1-c)/\kappa_2$. This yields the formulas; the inactive KKT inequality is precisely $\kappa_2<\beta_2(\kappa_1)$. B1 is symmetric. Finally, $\beta_i(x)<x$, so both strict breakdown inequalities cannot hold simultaneously.
+\end{proof}
+
+\begin{corollary}[Breakdown under two-sided contamination]\label{cor:breakdown-two}
+Class 2 collapses if and only if $\kappa_2<\beta_2(\kappa_1)=(\Delta/4)\kappa_1/(\kappa_1+\Delta/4+\tau_1)$, and symmetrically for class 1. Hence at most one class collapses. The boundary $\beta_2(\kappa_1)$ increases in $\kappa_1$, so class-1 outliers make class 2 harder to collapse. Under symmetric contamination, neither class collapses.
+\end{corollary}
+
+\subsection{Transfer and classification}
+\begin{theorem}\label{thm:transfer-two}
+Assume (A1)--(A4). Then the actual optimum is $\max F_2\{1+\op(1)\}$, its four classwise sums converge at the corresponding weighted rates, $\widehat c=c^*+\op(1)$, and for $\boldsymbol x_0\in\Pi_i$,
+\begin{equation}\label{eq:y-two}
+\widehat y(\boldsymbol x_0)=y_i^*+\op(1),
+\qquad y_i^*=(-1)^iP^*+c^*.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The sandwich and strong-concavity arguments of Theorems~\ref{thm:transfer-value} and \ref{thm:dual-solution} apply after replacing Lemma~\ref{lem:reduction} by Lemma~\ref{lem:four}. Assumption (A4) keeps the relevant costs comparable with $\Delta_*$. Summing the actual KKT equations over either outlier group gives $1+t_i\widehat c=\kappa_i\widehat s_i+\op(1)$, and the limit is \eqref{eq:kkt-two}. The data term is unchanged because outlier--test cross terms remain negligible.
+\end{proof}
+
+\begin{corollary}[Misclassification under two-sided contamination]\label{cor:misclass-two}
+Assume $\tau_1=\tau_2=\tau$. For $x>0$, define
+\begin{equation}\label{eq:kappacx}
+\kappa_c(x)=
+\begin{cases}
+\displaystyle {\tau^2x\over\tau^2+\Delta x+\Delta\tau},&\tau\ge\Delta/2,\\[2mm]
+\displaystyle \max\left\{{(\tau-\Delta/4)x\over x+\Delta/4+\tau},0\right\},&\tau<\Delta/2.
+\end{cases}
+\end{equation}
+Then $y_1^*>0$ exactly when $\kappa_2<\kappa_c(\kappa_1)$ and $y_2^*<0$ exactly when $\kappa_1<\kappa_c(\kappa_2)$. Thus at most one class is asymptotically misclassified. Moreover, $\kappa_c(x)$ increases in $x$ and approaches the one-sided threshold \eqref{eq:kappa-c} as $x\to\infty$.
+\end{corollary}
+
+\begin{corollary}[Symmetric contamination]\label{cor:symmetric}
+If $\tau_1=\tau_2=\tau$ and $\kappa_1=\kappa_2=\kappa$, then
+\[
+c^*=0,\qquad \astar=\bstar={2\over\Delta_*},\qquad
+s_1^*=s_2^*={1\over\kappa},\qquad
+\max F_2={2\over\Delta_*}+{1\over\kappa},\qquad
+ y_i^*=(-1)^i{\Delta\over\Delta_*}.
+\]
+Thus the limiting discriminant equals that of the clean SVM, although the dual optimum increases and the margin shrinks.
+\end{corollary}
+
+\begin{remark}
+Each active outlier group imposes a margin equation, $\kappa_1s_1=1+c$ and $\kappa_2s_2=1-c$. The two equations pull the intercept in opposite directions. Equal pulls cancel; unequal pulls shift failure toward the class with the more distant outliers.
+\end{remark}

@@ -1,0 +1,101 @@
+\section{Setup}
+\subsection{Populations and outliers}
+
+Let $\Pi_1$ and $\Pi_2$ be independent $d$-variate populations. Population $\Pi_i$ has mean $\boldsymbol\mu_i$ and covariance matrix $\boldsymbol\Sigma_i$. From $\Pi_i$ we observe independent vectors $\boldsymbol x_{i1},\ldots,\boldsymbol x_{in_i}$. Until Section~\ref{sec:two-sided}, the training data labeled as class 2 additionally contain $m$ independent outliers $\boldsymbol y_1,\ldots,\boldsymbol y_m$, where $\boldsymbol y_k$ has mean $\boldsymbol\mu_{0k}$ and covariance $\boldsymbol\Sigma_{0k}$. We hold $n_1,n_2,m$ fixed and let $d\to\infty$.
+
+Let $I_1,I_2$, and $O$ index the class-1 inliers, class-2 inliers, and outliers. The full training set is $\boldsymbol x_1,\ldots,\boldsymbol x_N$, where $N=n_1+n_2+m$, with labels $t_j=-1$ for $j\in I_1$ and $t_j=+1$ for $j\in I_2\cup O$. Define
+\begin{equation}
+\boldsymbol\mu=\boldsymbol\mu_1-\boldsymbol\mu_2,\quad
+\Delta=\lVert\boldsymbol\mu\rVert^2,\quad
+\boldsymbol\mu_*=\frac{\boldsymbol\mu_1+\boldsymbol\mu_2}{2},\quad
+\tau_i=\frac{\tr(\boldsymbol\Sigma_i)}{n_i},\quad
+\Delta_*=\Delta+\tau_1+\tau_2.
+\end{equation}
+For outlier $k$, let
+\begin{equation}
+\boldsymbol\nu_k=\boldsymbol\mu_{0k}-\boldsymbol\mu_*,\qquad
+D_k=\lVert\boldsymbol\nu_k\rVert^2+\tr(\boldsymbol\Sigma_{0k}),\qquad
+\kappa=\left(\sum_{k=1}^{m}\frac{1}{D_k}\right)^{-1}.
+\end{equation}
+We call $D_k$ the effective squared distance of outlier $k$ and $\kappa$ the effective outlier distance. If $D_1=\cdots=D_m=D$, then $\kappa=D/m$; thus $m$ equidistant outliers act like one outlier that is $m$ times closer.
+
+\subsection{Hard-margin linear SVM}
+The hard-margin linear SVM minimizes $\lVert\boldsymbol w\rVert^2/2$ subject to $t_j(\boldsymbol w^\T\boldsymbol x_j+b)\ge1$. Its dual is
+\begin{equation}\label{eq:dual}
+\max_{\boldsymbol\alpha}
+L(\boldsymbol\alpha)=\sum_{j=1}^{N}\alpha_j-\frac12\sum_{j,k=1}^{N}\alpha_j\alpha_k t_jt_k\boldsymbol x_j^\T\boldsymbol x_k,
+\quad
+\alpha_j\ge0,
+\quad
+\sum_{j=1}^{N}\alpha_jt_j=0.
+\end{equation}
+Writing $\boldsymbol t=(t_1,\ldots,t_N)^\T$, let
+\[
+\cC=\{\boldsymbol\alpha\in\R^N:\boldsymbol\alpha\ge0,\ \boldsymbol t^\T\boldsymbol\alpha=0\}.
+\]
+If $\widehat{\boldsymbol\alpha}$ maximizes \eqref{eq:dual}, then
+$\widehat{\boldsymbol w}=\sum_j\widehat\alpha_jt_j\boldsymbol x_j$ and
+$\widehat y(\boldsymbol x)=\widehat{\boldsymbol w}^{\T}\boldsymbol x+\widehat b$.
+The KKT conditions give $t_j\widehat y(\boldsymbol x_j)=1$ whenever $\widehat\alpha_j>0$.
+
+\subsection{Assumptions}
+Let $\boldsymbol\varepsilon_j=\boldsymbol x_j-\boldsymbol\mu_i$ for $j\in I_i$ and $\boldsymbol\eta_k=\boldsymbol y_k-\boldsymbol\mu_{0k}$. As $d\to\infty$, assume:
+\begin{description}
+\item[(A1)] For $i,l\in\{1,2\}$,
+\[
+{\tr(\boldsymbol\Sigma_i\boldsymbol\Sigma_l)\over\Delta_*^2}\to0,
+\qquad
+{\boldsymbol\mu^\T\boldsymbol\Sigma_i\boldsymbol\mu\over\Delta_*^2}\to0,
+\qquad
+{\operatorname{Var}(\lVert\boldsymbol\varepsilon\rVert^2)\over\Delta_*^2}\to0
+\quad(\boldsymbol\varepsilon\sim(0,\boldsymbol\Sigma_i)).
+\]
+\item[(A2)] For $k\ne l$ and $i=1,2$,
+\[
+{\lvert\boldsymbol\mu^\T\boldsymbol\nu_k\rvert+\lvert\boldsymbol\nu_k^\T\boldsymbol\nu_l\rvert\over\Delta_*}\to0,
+\]
+\[
+{\boldsymbol\mu^\T\boldsymbol\Sigma_{0k}\boldsymbol\mu+
+\boldsymbol\nu_k^\T\boldsymbol\Sigma_i\boldsymbol\nu_k+
+\tr(\boldsymbol\Sigma_i\boldsymbol\Sigma_{0k})+
+\boldsymbol\nu_k^\T\boldsymbol\Sigma_{0l}\boldsymbol\nu_k+
+\tr(\boldsymbol\Sigma_{0k}\boldsymbol\Sigma_{0l})
+\over\Delta_*^2}\to0,
+\]
+\[
+{\boldsymbol\nu_k^\T\boldsymbol\Sigma_{0k}\boldsymbol\nu_k+
+\operatorname{Var}(\lVert\boldsymbol\eta_k\rVert^2)
+\over D_k^2}\to0.
+\]
+\item[(A3)] $\limsup_{d\to\infty}\tau_2/(\Delta+\tau_1)<\infty$.
+\end{description}
+Condition (A1) is standard in HDLSS analysis. For example, it holds for identity covariance and bounded fourth moments. Condition (A2) requires the outlier deviations to be asymptotically orthogonal to the population contrast and to each other, which is typical for unrelated directions in high dimensions. Section~\ref{sec:two-sided} introduces (A4).
+
+\subsection{Notation guide}
+Table~\ref{tab:notation} collects the symbols used repeatedly below.
+\begin{table}[htbp]
+\centering
+\caption{Principal notation.}
+\label{tab:notation}
+\begin{tabularx}{\textwidth}{@{}>{$}l<{$}X@{}}
+\toprule
+\text{Symbol} & \text{Meaning}\\
+\midrule
+n_i,\ I_i & Inlier sample size and index set for class $i$.\\
+O,\ O_i,\ m_i & Outlier index set; in Section~\ref{sec:two-sided}, $O_i$ and $m_i=|O_i|$ refer to class $i$.\\
+\Delta,\ \Delta_* & Squared mean separation and its noise-adjusted version.\\
+\tau_i & Per-sample covariance trace, $\tr(\boldsymbol\Sigma_i)/n_i$.\\
+D_k,\ \kappa,\ \kappa_i & Effective squared distance of one outlier; harmonic aggregate for one or for class $i$.\\
+p & Shorthand $p=\Delta/4$.\\
+a,b,s & Total dual mass on class-1 inliers, class-2 inliers, and class-2 outliers.\\
+s_i & Total dual mass on outliers labeled as class $i$.\\
+E & $\Delta(\tau_1+\tau_2)/4+\tau_1\tau_2$.\\
+H & $\kappa_1\kappa_2\Delta_*+(\kappa_1+\kappa_2)E$ in the two-sided problem.\\
+\rho_i & Parallel effective cost $\{(p+\tau_i)^{-1}+\kappa_i^{-1}\}^{-1}$.\\
+\beta_i(x) & Two-sided collapse boundary $px/(x+p+\tau_{3-i})$.\\
+(a^\circ,b^\circ) & Unconstrained stationary point of the reduced one-sided objective.\\
+(a^\star,b^\star) & Constrained maximizer over $\cD=\{(a,b):a\ge b\ge0\}$.\\
+\widetilde{\boldsymbol G},\ \boldsymbol R & Deterministic Gram limit and remainder $\boldsymbol G-\widetilde{\boldsymbol G}$.\\
+\bottomrule
+\end{tabularx}
+\end{table}

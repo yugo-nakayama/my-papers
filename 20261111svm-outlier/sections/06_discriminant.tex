@@ -1,0 +1,94 @@
+\section{One-sided contamination: solution and discriminant}
+Let $\widetilde{\boldsymbol\alpha}$ be the unique maximizer of $\widetilde L$ on $\cC$, obtained from \eqref{eq:allocation} at $(\astar,\bstar)$, and let $\widehat{\boldsymbol\alpha}$ maximize $L$. Define the seminorm
+$\lVert\boldsymbol\theta\rVert_{\widetilde G}=(\boldsymbol\theta^\T\widetilde{\boldsymbol G}\boldsymbol\theta)^{1/2}$.
+
+\begin{lemma}\label{lem:quad-facts}
+For $c'>0$, let $f(\boldsymbol\alpha)=\one^\T\boldsymbol\alpha-(c'/2)\boldsymbol\alpha^\T\widetilde{\boldsymbol G}\boldsymbol\alpha$ and let $\boldsymbol\alpha^\circ$ maximize $f$ on $\cC$. Then
+\[
+f(\boldsymbol\alpha)\le f(\boldsymbol\alpha^\circ)-{c'\over2}\lVert\boldsymbol\alpha-\boldsymbol\alpha^\circ\rVert_{\widetilde G}^2.
+\]
+If $\boldsymbol A$ is positive semidefinite and $\boldsymbol\alpha^\circ$ maximizes $\one^\T\boldsymbol\alpha-\boldsymbol\alpha^\T\boldsymbol A\boldsymbol\alpha/2$ on the cone $\cC$, then
+$\one^\T\boldsymbol\alpha^\circ=(\boldsymbol\alpha^\circ)^\T\boldsymbol A\boldsymbol\alpha^\circ$ and the maximum equals $\one^\T\boldsymbol\alpha^\circ/2$.
+\end{lemma}
+\begin{proof}
+The first statement is the exact quadratic expansion around $\boldsymbol\alpha^\circ$ plus first-order optimality. For the second, maximize the objective along $t\boldsymbol\alpha^\circ$, $t\ge0$, and differentiate at $t=1$.
+\end{proof}
+
+\begin{theorem}[Convergence of the dual solution]\label{thm:dual-solution}
+Assume (A1)--(A3) and put $\boldsymbol\delta=\widehat{\boldsymbol\alpha}-\widetilde{\boldsymbol\alpha}$. Then
+\[
+{\lVert\boldsymbol\delta\rVert_{\widetilde G}^2\over F_{\max}}=\op(1).
+\]
+If $\widehat a,\widehat b,\widehat s$ are the classwise sums of $\widehat{\boldsymbol\alpha}$, then
+\[
+\Delta|\widehat a-\astar+\widehat b-\bstar|=\op(1),\quad
+\tau_1|\widehat a-\astar|=\op(1),\quad
+\tau_2|\widehat b-\bstar|=\op(1),
+\]
+and, when $\kappa/\Delta_*$ is bounded, $\kappa|\widehat s-\sstar|=\op(1)$.
+\end{theorem}
+\begin{proof}
+The sandwich used in Theorem~\ref{thm:transfer-value}, together with Lemma~\ref{lem:quad-facts}, gives an upper bound of order $\epsilon F_{\max}$ for
+$\lVert\widehat{\boldsymbol\alpha}-\widetilde{\boldsymbol\alpha}\rVert_{\widetilde G}^2$; here $\epsilon=\op(1)$. Applying Lemma~\ref{lem:reduction} to the difference vector bounds each squared classwise discrepancy by this seminorm. The displayed rates follow from $\Delta_*F_{\max}=O(1)$ and the identity $\widehat s-\sstar=(\widehat a-\astar)-(\widehat b-\bstar)$.
+\end{proof}
+
+\subsection{The discriminant function}
+For a new observation $\boldsymbol x_0$ from $\Pi_i$, independent of the training data, translation invariance gives
+\begin{equation}\label{eq:disc-centered}
+\widehat y(\boldsymbol x_0)=
+\sum_{j=1}^{N}\widehat\alpha_jt_j(\boldsymbol x_j-\boldsymbol\mu_*)^\T(\boldsymbol x_0-\boldsymbol\mu_*)+\widehat c,
+\qquad
+\widehat c=\widehat b+\widehat{\boldsymbol w}^{\T}\boldsymbol\mu_*.
+\end{equation}
+For a training point, the KKT condition is
+\begin{equation}\label{eq:kkt-centered}
+(\boldsymbol G\widehat{\boldsymbol\alpha})_j+t_j\widehat c=1
+\qquad\text{whenever }\widehat\alpha_j>0.
+\end{equation}
+Define
+\begin{equation}\label{eq:cystar}
+c^*=1-\kappa\sstar,
+\qquad
+y_i^*=(-1)^i{\Delta\over4}(\astar+\bstar)+c^*,\quad i=1,2.
+\end{equation}
+
+\begin{theorem}[Limit of the discriminant function]\label{thm:discriminant}
+Under (A1)--(A3), $\widehat c=c^*+\op(1)$ and, for $\boldsymbol x_0\in\Pi_i$,
+$\widehat y(\boldsymbol x_0)=y_i^*+\op(1)$. Explicitly, if $\kappa\ge\Delta/4$,
+\begin{equation}\label{eq:y-interior}
+y_i^*={(-1)^i\Delta(\tau_2+2\kappa)/2+\kappa(\tau_1-\tau_2)+E\over\kappa\Delta_*+E},
+\end{equation}
+and if $\kappa<\Delta/4$,
+\begin{equation}\label{eq:y-boundary}
+y_i^*={(-1)^i\Delta/2+\Delta/4+\tau_1-\kappa\over\Delta/4+\tau_1+\kappa}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Summing \eqref{eq:kkt-centered} over class-1 support vectors and dividing by their positive total gives
+$\widehat c=\widehat a^{-1}\sum_{j\in I_1}\widehat\alpha_j(\boldsymbol G\widehat{\boldsymbol\alpha})_j-1$.
+Lemma~\ref{lem:geometry}, Theorem~\ref{thm:dual-solution}, and the optimal allocation imply
+$\widehat c=p(\astar+\bstar)+\tau_1\astar-1+\op(1)$.
+Identity \eqref{eq:identity} turns this expression into $1-\kappa\sstar+\op(1)$.
+
+For the data term in \eqref{eq:disc-centered}, the same moment bounds as in Lemma~\ref{lem:geometry} give
+$\sum_j\widehat\alpha_jt_j(\boldsymbol x_j-\boldsymbol\mu_*)^\T(\boldsymbol x_0-\boldsymbol\mu_*)=(-1)^ip(\astar+\bstar)+\op(1)$.
+Substitution proves the first claim. Equations \eqref{eq:y-interior} and \eqref{eq:y-boundary} follow by inserting Theorem~\ref{thm:one-sided} into \eqref{eq:cystar}.
+\end{proof}
+
+\begin{corollary}[Misclassification rates]\label{cor:misclass-one}
+Let $e(i)$ be the probability that the SVM misclassifies an independent observation from $\Pi_i$. If $\limsup y_1^*<0$, then $e(1)\to0$, whereas if $\liminf y_1^*>0$, then $e(1)\to1$. Likewise, $e(2)\to0$ if $\liminf y_2^*>0$ and $e(2)\to1$ if $\limsup y_2^*<0$.
+
+If $\tau_1=\tau_2=\tau$, define
+\begin{equation}\label{eq:kappa-c}
+\kappa_c=
+\begin{cases}
+\tau^2/\Delta,&\tau\ge\Delta/2,\\
+\max(\tau-\Delta/4,0),&\tau<\Delta/2.
+\end{cases}
+\end{equation}
+Then $y_2^*>0$ for every $\kappa$, while $y_1^*>0$ exactly when $\kappa<\kappa_c$. Thus, if $\limsup\kappa/\kappa_c<1$, the SVM misclassifies the clean class $\Pi_1$ with probability tending to one.
+\end{corollary}
+
+\begin{remark}
+Although the outliers are labeled as class 2, they can destroy class 1 through the intercept. KKT places each active outlier on the positive margin. Because the weight vector is asymptotically orthogonal to the outlier direction, a small effective distance is accommodated mainly by raising the intercept and shifting the whole hyperplane toward $\Pi_1$.
+\end{remark}
