@@ -1,0 +1,49 @@
+\section{NRM, its finite-score target, and block correction}\label{sec:nrm}
+Work on the $r$-dimensional space $\ind_n^\perp$, where $P_n$ acts as the identity.  Let $a_1\ge\cdots\ge a_r$ be the nonzero eigenvalues of $S_D$.  Sequential NRM is
+\begin{equation}\label{eq:nrm}
+\wt\lambda_i=a_i-\frac1{r-i}\sum_{j=i+1}^r a_j,\qquad 1\le i\le r-1.
+\end{equation}
+Let $s_1\ge\cdots\ge s_m\ge0$ be the nonzero eigenvalues of $A_s$ and set $s_{m+1}=\cdots=s_r=0$.  These $s_i$ are random finite-score oracle eigenvalues.
+
+\begin{definition}[Oracle block noise reduction]\label{def:bnrm}
+If $m$ is known, define
+\begin{equation}\label{eq:bnrm}
+\wh\nu_m=\frac1{r-m}\sum_{j=m+1}^r a_j,
+\qquad \wh\lambda_i^B=a_i-\wh\nu_m,\quad i=1,\ldots,m.
+\end{equation}
+When $m$ is estimated, all results below are conditional on the event $\wh m=m$.
+\end{definition}
+
+\begin{theorem}[Finite-score oracle bounds]\label{thm:oracle}
+Suppose $\norm{E_N}_{\op}\le\Delta$ in \eqref{eq:dualdecomp}.  Then
+\begin{equation}\label{eq:bnrmbound}
+\max_{1\le i\le m}\abs{\wh\lambda_i^B-s_i}\le2\Delta,
+\end{equation}
+and, for sequential NRM,
+\begin{equation}\label{eq:nrmtarget}
+\abs{\wt\lambda_i-\left(s_i-\frac1{r-i}\sum_{j=i+1}^m s_j\right)}\le2\Delta,
+\qquad 1\le i\le m.
+\end{equation}
+\end{theorem}
+\begin{proof}
+On $\ind_n^\perp$, compare $S_D$ with $B=A_s+(\tau_0/r)I_r$.  The eigenvalues of $B$ are $b_j=s_j+\tau_0/r$ for $j\le m$ and $b_j=\tau_0/r$ for $j>m$.  Lemma~\ref{lem:weyl} gives $\max_j\abs{a_j-b_j}\le\Delta$.
+
+The lower-eigenvalue average of $B$ is exactly $\tau_0/r$.  Averaging cannot increase the maximum perturbation, so $\abs{\wh\nu_m-\tau_0/r}\le\Delta$, and \eqref{eq:bnrmbound} follows by the triangle inequality.
+
+For sequential NRM, direct substitution gives
+\begin{equation}
+ b_i-\frac1{r-i}\sum_{j=i+1}^r b_j
+ =s_i-\frac1{r-i}\sum_{j=i+1}^m s_j.
+\end{equation}
+The NRM functional is $2$-Lipschitz in the maximum norm, which proves \eqref{eq:nrmtarget}.
+\end{proof}
+
+\begin{corollary}[Comparable spikes at fixed $n$]\label{cor:twospike}
+Suppose $m=2$, $s_1=s_2=s>0$, and $\Delta/s\xrightarrow{p}0$.  Then
+\begin{equation}
+\frac{\wt\lambda_1}{s}\xrightarrow{p}1-\frac1{r-1}=\frac{r-2}{r-1},
+\qquad
+\frac{\wh\lambda_1^B}{s}\xrightarrow{p}1.
+\end{equation}
+\end{corollary}
+The corollary does not say that sequential NRM fails in every multi-spike regime.  It says that later-spike subtraction is not automatically negligible when $n$ is fixed.

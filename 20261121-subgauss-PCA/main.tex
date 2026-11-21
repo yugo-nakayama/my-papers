@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+% mathtools is part of the target arXiv environment; compile without it only
+% when a minimal local TeX installation does not provide the package.
+\IfFileExists{mathtools.sty}{\usepackage{mathtools}}{}
+\usepackage[authoryear,round]{natbib}
+\usepackage{booktabs,graphicx,array}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Sub-Gaussian HDLSS Principal Component Analysis},
+  pdfauthor={Yugo Nakayama},
+  pdfsubject={High-probability theory and numerical evidence for NRM, CDM, and block noise reduction},
+  pdfkeywords={HDLSS, PCA, sub-Gaussian, NRM, CDM, bNRM}
+}
+\graphicspath{{figures/}}
+\numberwithin{equation}{section}
+
+% Theorem environments share a section-level counter.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% Operators and frequently used sets.
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\dist}{dist}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\F}{\mathrm{F}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+% Place the affiliation immediately below the author, centered.
+\newcommand{\authoraffiliation}{Independent researcher}
+\makeatletter
+\def\@setauthors{%
+  \begingroup
+  \trivlist
+  \centering\footnotesize \@topsep30\p@\relax
+  \advance\@topsep by -\baselineskip
+  \item\relax
+  \author@andify\authors
+  \def\\{\protect\linebreak}%
+  {\large\scshape\authors\par}%
+  \vspace{4pt}
+  {\normalfont\normalsize\itshape\authoraffiliation\par}%
+  \endtrivlist
+  \endgroup
+}
+\makeatother
+
+\title[Sub-Gaussian HDLSS PCA]{Sub-Gaussian HDLSS Principal Component Analysis:\\
+High-Probability Theory and Numerical Evidence for NRM, CDM, and Block Noise Reduction}
+\author{Yugo Nakayama}
+\date{9 November 2026}
+\subjclass[2020]{Primary 62H25; secondary 60B20, 62G20}
+\keywords{HDLSS, principal component analysis, sub-Gaussian, noise reduction methodology, cross-data matrix, spiked covariance}
+
+\begin{document}
+\begin{abstract}
+We study principal component analysis when the dimension $d$ is much larger than the sample size $n$ under an independent-factor sub-Gaussian model.  The dual sample covariance is decomposed into a finite-rank score matrix, an isotropic bulk shift, and a high-probability remainder governed by the bulk trace $\tau_0$, Frobenius scale $q_0$, and largest noise eigenvalue $b_0=\norm{\Lambda_0}_{\op}$.  This decomposition separates fixed-score HDLSS limits from joint limits in which $n$ also grows.  It shows that sequential noise reduction generally targets a score oracle containing a later-spike subtraction, while an oracle block correction avoids that subtraction when the signal rank is known.  A parallel cross-data-matrix bound explains the benefit and cost of sample splitting.  Reproducible Gaussian-factor simulations with 1,000 replications per configuration confirm the score-oracle approximation, the multi-spike subtraction, the separation between eigenvalue and eigenvector scales, and the population transition when $n$ grows.
+\end{abstract}
+\maketitle
+
+\input{sections/01_intro}
+\input{sections/02_setup}
+\input{sections/03_tools}
+\input{sections/04_dual}
+\input{sections/05_nrm}
+\input{sections/06_population}
+\input{sections/07_eigenvectors}
+\input{sections/08_cdm}
+\input{sections/09_boundaries}
+\input{sections/10_numerical}
+\input{sections/11_discussion}
+\input{sections/12_conclusion}
+
+\section*{Acknowledgments}
+Parts of the drafting and technical editing of this manuscript were assisted by large language models, including Anthropic’s Claude Opus 5.5. The author takes full responsibility for the correctness of all mathematical statements, proofs, and numerical results.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

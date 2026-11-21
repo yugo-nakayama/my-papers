@@ -1,0 +1,63 @@
+\section{Numerical experiments}\label{sec:numerical}
+\subsection{Design and reproducibility}
+We ran four preregistered-style experiments under the Gaussian special case of SG-I with an isotropic unit bulk.  Every configuration used 1,000 Monte Carlo replications, master seed 20261109, and independent child streams created by NumPy's \texttt{SeedSequence}.  No draw was discarded and no tuning rule was selected after inspecting the results.  The complete script, summary CSV, seed manifest, and vector PDF figures are included in \texttt{code/}, \texttt{results/}, and \texttt{figures/}.  The largest Monte Carlo standard error among the reported mean errors was $0.0098$.
+
+For an estimate $\wh\lambda_i$, we report population relative error $\abs{\wh\lambda_i-\lambda_i}/\lambda_i$ and score-oracle relative error $\abs{\wh\lambda_i-s_i}/s_i$.  For CDM, $s_i$ is replaced by the corresponding split score oracle $\sigma_i(C_s)$.  Unless stated otherwise, $n=20$.
+
+\subsection{Fixed-score eigenvalue experiment}
+The first experiment used $m=1$, $\lambda=d^{0.7}$, and $d\in\{250,500,1000,2000\}$.  Ordinary PCA retains the bulk shift: its median population relative error rose from $0.258$ to $0.484$.  bNRM's score-oracle error fell from $0.0181$ to $0.0116$, and CDM's fell from $0.0296$ to $0.0183$.  In contrast, their population errors did not approach zero: the bNRM median was $0.222$ at $d=250$ and $0.214$ at $d=2000$; the corresponding CDM values were $0.226$ and $0.220$.  Figure~\ref{fig:fixedscore} therefore visualizes the central distinction: increasing $d$ improves bulk removal relative to the random score oracle but does not create new signal-score observations.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.96\textwidth]{fixed_score_errors.pdf}
+\caption{Fixed-score experiment.  Medians over 1,000 replications.  bNRM and CDM approach their respective score oracles, whereas their population errors plateau because $n$ is fixed.}\label{fig:fixedscore}
+\end{figure}
+
+\subsection{Sequential subtraction with two spikes}
+The second experiment used $m=2$, equal population spikes $\lambda_1=\lambda_2=d^{0.9}$, and the same dimensions.  For component one, Figure~\ref{fig:multispike} compares $\wt\lambda_1/s_1$ with the sample-specific theoretical target $1-s_2/\{(r-1)s_1\}$ and with $\wh\lambda_1^B/s_1$.  At $d=2000$, their medians were $0.96844$, $0.96813$, and $0.99987$, respectively.  The median absolute discrepancy between sequential NRM and its target decreased from $0.00435$ to $0.00201$, almost exactly matching the bNRM score-oracle discrepancy.  The sequential limit is not $17/18$ here because the two finite-sample score eigenvalues are ordered and typically unequal even when the population spikes coincide; Theorem~\ref{thm:oracle} predicts the realized ratio $s_2/s_1$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{multispike_subtraction.pdf}
+\caption{Two equal population spikes.  Sequential NRM follows its later-spike-subtracted score target, while bNRM remains centered at the first score-oracle eigenvalue.}\label{fig:multispike}
+\end{figure}
+
+\subsection{Eigenvalue and direction scales}
+The third experiment used one spike $\lambda=d^\alpha$.  With $\alpha=0.7$, the median sine angle of the leading empirical direction increased from $0.479$ to $0.587$ as $d$ grew from 250 to 2000.  With $\alpha=1.2$, it decreased from $0.134$ to $0.107$.  Thus $\alpha=0.7>1/2$ is sufficient for improving eigenvalue-oracle accuracy in the first experiment but not for direction recovery, whereas $\alpha=1.2>1$ overcomes the trace scale.  Figure~\ref{fig:directions} agrees with the phase separation in Proposition~\ref{prop:angle}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{direction_phase.pdf}
+\caption{Leading empirical direction under an isotropic bulk.  The weak spike is increasingly dominated by total bulk energy; the strong spike improves with dimension.}\label{fig:directions}
+\end{figure}
+
+\subsection{Joint HDLSS transition}
+Finally, we set $n=\sqrt d$ at $d\in\{400,900,1600,2500\}$, with $m=1$ and $\lambda=d^{0.7}$.  The bNRM population-error median decreased from $0.221$ to $0.137$, while its score-oracle-error median decreased from $0.0162$ to $0.00437$.  The former remains larger because it contains score-covariance variability, but unlike the fixed-$n$ experiment it decreases as the number of score observations grows.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{joint_population_transition.pdf}
+\caption{J-HDLSS sequence with $n=\sqrt d$.  Both error components decrease, but score-covariance variability remains the dominant finite-sample contribution.}\label{fig:joint}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Selected numerical results (medians over 1,000 replications).}\label{tab:numerical}
+\small
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Experiment & Metric & Initial $d$ & Final $d$ \\
+\midrule
+Fixed $n$, bNRM & population relative error & 0.222 & 0.214 \\
+Fixed $n$, bNRM & score-oracle relative error & 0.0181 & 0.0116 \\
+Fixed $n$, CDM & population relative error & 0.226 & 0.220 \\
+Fixed $n$, CDM & score-oracle relative error & 0.0296 & 0.0183 \\
+Two spikes, sequential NRM & estimate / score oracle & 0.9691 & 0.9684 \\
+Two spikes, bNRM & estimate / score oracle & 1.0001 & 0.9999 \\
+Direction, $\alpha=0.7$ & sine angle & 0.479 & 0.587 \\
+Direction, $\alpha=1.2$ & sine angle & 0.134 & 0.107 \\
+J-HDLSS, bNRM & population relative error & 0.221 & 0.137 \\
+J-HDLSS, bNRM & score-oracle relative error & 0.0162 & 0.00437 \\
+\bottomrule
+\end{tabular}
+\end{table}

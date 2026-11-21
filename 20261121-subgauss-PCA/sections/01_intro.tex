@@ -1,0 +1,23 @@
+\section{Introduction}\label{sec:intro}
+\enlargethispage{2pt}
+Principal component analysis (PCA) estimates the eigensystem of a covariance matrix.  Its geometric and probabilistic foundations go back to \citet{Pearson1901} and \citet{Hotelling1933}; standard accounts and a modern review are given by \citet{Jolliffe2002} and \citet{JolliffeCadima2016}.  In the classical regime, the dimension is fixed and the sample size tends to infinity.
+
+When dimension and sample size grow proportionally, the Mar\v{c}enko--Pastur law and spiked-covariance theory describe bulk spectra, extreme eigenvalues, and eigenvector phase transitions \citep{MarchenkoPastur1967,Johnstone2001,BaikEtAl2005,BaikSilverstein2006,Paul2007}.  The present paper instead emphasizes the high-dimension, low-sample-size (HDLSS) regime $d\gg n$, where the sample covariance has rank at most $n-1$.  Its nonzero eigenvalues are more naturally studied through the $n\times n$ dual Gram matrix than through the $d\times d$ covariance matrix; see \citet{HallMarronNeeman2005}, the extension of the geometric representation by \citet{AhnEtAl2007}, \citet{JungMarron2009}, and the surveys of \citet{AoshimaYata2017,AoshimaEtAl2018}.
+
+\citet{YataAoshima2012} developed the noise-reduction methodology (NRM), which subtracts an estimate of the high-dimensional noise floor from each empirical eigenvalue.  The cross-data-matrix methodology (CDM) of \citet{YataAoshima2010} instead splits the sample and crosses independent halves, replacing the positive within-sample noise shift by a mean-zero cross-noise term.  Related HDLSS developments include non-Gaussian PCA consistency \citep{YataAoshima2009}, intrinsic-dimension estimation \citep{YataAoshima2010Intrinsic}, first-component inference \citep{IshiiEtAl2016}, and empirical-eigenstructure bias analysis \citep{WangFan2017}.  The power-spiked analysis of \citet{YataAoshima2013} places these procedures in a common asymptotic framework.  Sparsity offers a complementary route to direction recovery, as illustrated by \citet{JohnstoneLu2009}; here we study dense directions and explicit noise-floor corrections.
+
+The phrase ``under a sub-Gaussian assumption'' is not by itself precise enough for a quadratic-form proof.  A tail bound for every linear functional does not automatically provide Hanson--Wright concentration for $x^\top A x$.  We consequently distinguish directional sub-Gaussianity from an independent-factor representation and use the latter in the main results.
+
+The central point is informational.  Increasing $d$ creates many bulk coordinates, so their aggregate Gram contribution can become nearly deterministic.  It does not create additional observations of the low-dimensional signal scores.  When $n$ is fixed, the score covariance remains random; even perfect bulk removal need not consistently estimate a population spike.
+
+\subsection{Contributions}
+The paper makes five contributions.
+\begin{enumerate}
+\item It gives a nonasymptotic decomposition of the dual covariance.  The bulk error is expressed by $\tau_0=\tr(\Lambda_0)$, $q_0=\norm{\Lambda_0}_{\F}$, and $b_0=\norm{\Lambda_0}_{\op}$.
+\item It identifies the exact finite-score target of sequential NRM.  The target for component $i$ contains $-(r-i)^{-1}\sum_{j=i+1}^m s_j$, which need not vanish at fixed $n$.
+\item Conditional on the correct signal rank $m$, it analyzes block NRM (bNRM), which estimates the common bulk floor from only the lower empirical eigenvalues.
+\item It derives a comparable high-probability CDM bound and separates the cancellation of the mean shift from the variability introduced by sample splitting.
+\item It reports deterministic, reproducible numerical experiments that distinguish population error from finite-score-oracle error rather than conflating the two targets.
+\end{enumerate}
+
+The results exchange distributional generality for explicit probabilities.  The independent-factor sub-Gaussian assumption is stronger than the fourth-moment conditions used in parts of the original NRM/CDM literature.  The claims below concern theorem form, proof transparency, and interpretation; they do not assert that every correction displayed here is absent from all previous covariance-denoising work.

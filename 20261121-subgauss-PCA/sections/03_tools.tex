@@ -1,0 +1,32 @@
+\section{Concentration and perturbation tools}\label{sec:tools}
+\begin{lemma}[Hanson--Wright inequality]\label{lem:hw}
+Let $z=(z_1,\ldots,z_p)^\top$ have independent, mean-zero coordinates with $\norm{z_j}_{\psi_2}\le K$.  For every symmetric $A$ and $t\ge0$,
+\begin{equation}
+\Pr\!\left(\abs{z^\top Az-\mathbb{E}z^\top Az}>t\right)
+\le2\exp\!\left[-c\min\!\left\{\frac{t^2}{K^4\norm{A}_{\F}^2},\frac{t}{K^2\norm{A}_{\op}}\right\}\right].
+\end{equation}
+\end{lemma}
+This is the standard Hanson--Wright inequality; see \citet{RudelsonVershynin2013} and \citet{HsuKakadeZhang2012}.
+
+\begin{lemma}[Bilinear form bound]\label{lem:bilinear}
+Let $z,w\in\R^p$ be independent and satisfy the conditions of Lemma~\ref{lem:hw}.  For every symmetric $A$ and $u\ge0$, with probability at least $1-2e^{-u}$,
+\begin{equation}\label{eq:bilinear}
+\abs{z^\top Aw}\le CK^2\left(\norm{A}_{\F}\sqrt{u}+\norm{A}_{\op}u\right).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Polarization gives
+\begin{equation}
+4z^\top Aw=(z+w)^\top A(z+w)-(z-w)^\top A(z-w).
+\end{equation}
+The coordinates of $z\pm w$ are independent across their coordinate index and have $\psi_2$ norm at most $2K$.  Apply Lemma~\ref{lem:hw} to both quadratic forms, use a union bound, and absorb numerical constants into $C$.
+\end{proof}
+
+\begin{lemma}[Weyl inequalities]\label{lem:weyl}
+For symmetric $A,B\in\R^{p\times p}$ with ordered eigenvalues $a_j,b_j$,
+\begin{equation}
+\max_j\abs{a_j-b_j}\le\norm{A-B}_{\op}.
+\end{equation}
+For rectangular matrices of the same size, $\abs{\sigma_j(A)-\sigma_j(B)}\le\norm{A-B}_{\op}$ for every singular-value index $j$.
+\end{lemma}
+These perturbation facts, together with Davis--Kahan bounds for eigenspaces, are standard; see \citet{StewartSun1990} and \citet{YuWangSamworth2015}.

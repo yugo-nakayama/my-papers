@@ -1,0 +1,22 @@
+{
+  "master_seed": 20261109,
+  "replicates_per_configuration": 1000,
+  "numpy_version": "1.26.4",
+  "pandas_version": "2.2.2",
+  "models": "Gaussian independent factors with isotropic unit bulk",
+  "dimensions": {
+    "fixed": [
+      250,
+      500,
+      1000,
+      2000
+    ],
+    "joint": [
+      400,
+      900,
+      1600,
+      2500
+    ]
+  },
+  "notes": "Monte Carlo SE is sample SD divided by sqrt(replicates). No post-selection or discarded draws."
+}

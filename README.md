@@ -24,7 +24,9 @@ my-papers/
 
 | ディレクトリ | タイトル / トピック | ステータス | arXiv / 公開先 |
 |---|---|---|---|
-| [`paper-sse-svm`](./paper-sse-svm) | Asymptotic Properties of SVM with SSE Model (SSE_SVM) | 執筆 / 公開中 | [yugo-nakayama/SSE_SVM](https://github.com/yugo-nakayama/SSE_SVM) |
+| [`20261015-svm-sse`](./20261015-svm-sse) | Asymptotic Properties of SVM with SSE Model (SSE_SVM) | 執筆 / 公開中 | [yugo-nakayama/SSE_SVM](https://github.com/yugo-nakayama/SSE_SVM) |
+| [`20261111svm-outlier`](./20261111svm-outlier) | Outlier-Robust SVM in HDLSS Settings | 執筆 / 公開中 | - |
+| [`20261121-subgauss-PCA`](./20261121-subgauss-PCA) | Sub-Gaussian HDLSS PCA Theory and High-Dimensional Estimation | arXiv 投稿準備完了 | - |
 | [`paper-outlier-svm-hdlss`](./paper-outlier-svm-hdlss) | Outlier-Robust SVM in HDLSS Settings | アイデア / ドラフト | - |
 | [`paper-subgaussian-hdlss-pca`](./paper-subgaussian-hdlss-pca) | Sub-Gaussian HDLSS PCA Theory | アイデア / ドラフト | - |
 

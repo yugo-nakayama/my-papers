@@ -1,0 +1,58 @@
+\section{Cross-data matrices and comparison}\label{sec:cdm}
+Split the observations into independent groups of sizes $n_1,n_2$, set $r_\ell=n_\ell-1$, and let $P_\ell$ be the corresponding centering matrices.  Define
+\begin{equation}\label{eq:cdm}
+C_D=\frac1{\sqrt{r_1r_2}}P_1X_1^\top X_2P_2=C_s+E_C,
+\end{equation}
+where
+\begin{equation}
+C_s=\frac1{\sqrt{r_1r_2}}P_1Z_{s,1}^\top\Lambda_sZ_{s,2}P_2,
+\qquad
+E_C=\frac1{\sqrt{r_1r_2}}P_1Z_{0,1}^\top\Lambda_0Z_{0,2}P_2.
+\end{equation}
+There is no $\tau_0P/r$ term because the two groups are independent.
+
+\begin{theorem}[CDM cross-noise bound]\label{thm:cdm}
+Let $L_C(u)=u+\log(2n_1n_2)$ and
+\begin{equation}
+\Delta_C(u)=CK^2\sqrt{\frac{n_1n_2}{r_1r_2}}
+\{q_0\sqrt{L_C(u)}+b_0L_C(u)\}.
+\end{equation}
+Under SG-I, with probability at least $1-2e^{-u}$,
+\begin{equation}
+\norm{E_C}_{\op}\le\Delta_C(u),
+\qquad
+\abs{\sigma_i(C_D)-\sigma_i(C_s)}\le\Delta_C(u).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Every uncentered cross entry is $z_{0,j;1}^\top\Lambda_0z_{0,k;2}$, has mean zero, and satisfies Lemma~\ref{lem:bilinear}.  A union bound over $n_1n_2$ entries makes the bound simultaneous.  The inequality $\norm B_{\op}\le\norm B_{\F}\le\sqrt{n_1n_2}\max_{j,k}\abs{B_{jk}}$, contraction by the centering matrices, and rectangular Weyl perturbation complete the proof.
+\end{proof}
+
+\begin{proposition}[From the split score oracle to population spikes]\label{prop:cdmpop}
+Set $A_\ell=r_\ell^{-1/2}Z_{s,\ell}P_\ell$ and $G_\ell=A_\ell A_\ell^\top$.  If $\norm{G_\ell-I_m}_{\op}\le\eps_\ell<1$, then
+\begin{equation}
+\abs{\sigma_i(C_s)-\lambda_i}\le C\lambda_1(\eps_1+\eps_2).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Write $U_\ell=G_\ell^{-1/2}A_\ell$, so $U_\ell U_\ell^\top=I_m$ and
+$C_s=U_1^\top G_1^{1/2}\Lambda_sG_2^{1/2}U_2$.  Partial isometries preserve its nonzero singular values.  Functional calculus gives $\norm{G_\ell^{1/2}-I_m}_{\op}\le\eps_\ell$, up to an absolute factor on $[0,1)$; expansion of $G_1^{1/2}\Lambda_sG_2^{1/2}-\Lambda_s$ and singular-value perturbation prove the claim.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Theoretical contrast under SG-I.}\label{tab:nrmcdm}
+\small
+\begin{tabular}{@{}p{0.24\textwidth}p{0.34\textwidth}p{0.34\textwidth}@{}}
+\toprule
+Feature & NRM / bNRM & CDM \\
+\midrule
+Mean bulk effect & Positive shift $\tau_0/r$, estimated and removed & Zero mean cross-noise \\
+Random bulk scale & $q_0$ and $b_0$ & Same $q_0$ and $b_0$ scales \\
+Observations & One full-sample Gram matrix & Split score samples \\
+Multiple spikes & Sequential subtraction; bNRM avoids it if $m$ is correct & Joint singular values, no sequential term \\
+Fixed-$n$ target & Full-sample score oracle & Split score oracle \\
+Population consistency & Requires $n\to\infty$ in general & Requires both split score covariances to concentrate \\
+\bottomrule
+\end{tabular}
+\end{table}

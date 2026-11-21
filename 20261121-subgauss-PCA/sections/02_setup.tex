@@ -1,0 +1,77 @@
+\section{Model, regimes, and notation}\label{sec:setup}
+\subsection{Dual representation}
+Let $x_1,\ldots,x_n\in\R^d$ be independent, mean-zero observations with covariance $\Sigma_d$.  Define
+\begin{equation}
+X=[x_1,\ldots,x_n]\in\R^{d\times n},\qquad P_n=I_n-\frac1n\ind_n\ind_n^\top,\qquad r=n-1,
+\end{equation}
+and $Y=XP_n$.  The sample covariance and dual sample covariance are
+\begin{equation}
+S=\frac1rYY^\top,\qquad S_D=\frac1rY^\top Y=\frac1rP_nX^\top XP_n.
+\end{equation}
+If $Y=U\Gamma V^\top$ is a singular value decomposition, then $S=r^{-1}U\Gamma^2U^\top$ and $S_D=r^{-1}V\Gamma^2V^\top$; hence they have the same nonzero eigenvalues.
+
+Fix $m<r$ and decompose
+\begin{equation}\label{eq:covsplit}
+\Sigma_d=H_s\Lambda_sH_s^\top+H_0\Lambda_0H_0^\top,
+\end{equation}
+where $H_s^\top H_0=0$, $\Lambda_s=\diag(\lambda_1,\ldots,\lambda_m)$, and $\Lambda_0=\diag(\lambda_{m+1},\ldots,\lambda_d)$.  Set
+\begin{equation}\label{eq:bulksummaries}
+\tau_0=\tr(\Lambda_0),\qquad q_0=\norm{\Lambda_0}_{\F}=\Bigl(\sum_{j=m+1}^d\lambda_j^2\Bigr)^{1/2},\qquad b_0=\norm{\Lambda_0}_{\op}=\max_{j>m}\lambda_j.
+\end{equation}
+Thus $b_0$ is explicitly the largest noise eigenvalue, equivalently the operator norm of the diagonal bulk matrix.  Two useful effective ranks are $r_{\mathrm{eff}}(\Lambda_0)=\tau_0/b_0$ and $r_2(\Lambda_0)=\tau_0^2/q_0^2$.
+
+\subsection{Sub-Gaussian formulations}
+For a real random variable $Z$, write
+\begin{equation}
+\norm{Z}_{\psi_2}=\inf\{t>0:\mathbb{E}\exp(Z^2/t^2)\le2\}.
+\end{equation}
+\begin{definition}[Directional sub-Gaussianity]
+A mean-zero random vector $x$ with covariance $\Sigma$ is directionally $K$-sub-Gaussian if $\norm{u^\top x}_{\psi_2}\le K\sqrt{u^\top\Sigma u}$ for every $u\in\R^d$.
+\end{definition}
+\begin{assumption}[Independent-factor sub-Gaussian model, SG-I]\label{ass:sgi}
+For each observation,
+\begin{equation}\label{eq:factor}
+x_k=H_s\Lambda_s^{1/2}z_{s,k}+H_0\Lambda_0^{1/2}z_{0,k}.
+\end{equation}
+All coordinates of $z_{s,k}$ and $z_{0,k}$ are mutually independent, have mean zero and variance one, and satisfy $\norm{z_{jk}}_{\psi_2}\le K$.  Observations are independent across $k$.
+\end{assumption}
+Assumption~\ref{ass:sgi} implies directional sub-Gaussianity up to an absolute constant, but the converse is false in general.  The distinction is essential because the proofs apply Hanson--Wright concentration to $z^\top\Lambda_0z$.
+
+\subsection{Two HDLSS regimes}
+We keep $m$ fixed and separate:
+\begin{description}
+\item[Fixed-score HDLSS (F-HDLSS)] $n$ and $m$ are fixed while $d\to\infty$.
+\item[Joint HDLSS (J-HDLSS)] $d\to\infty$, $n=n_d\to\infty$, $n_d/d\to0$, and $m$ is fixed.
+\end{description}
+In F-HDLSS, the $m\times n$ signal-score matrix has a fixed number of columns and does not concentrate at its population covariance.  In J-HDLSS it can.
+
+\subsection{Notation table}
+Table~\ref{tab:notation} collects the symbols used throughout the paper.
+\begin{table}[ht]
+\centering
+\caption{Principal notation.}\label{tab:notation}
+\small
+\begin{tabular}{@{}p{0.19\textwidth}p{0.72\textwidth}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$d,n,r$ & feature dimension, sample size, and centered rank $r=n-1$ \\
+$P_n$ & centering projection $I_n-n^{-1}\ind_n\ind_n^\top$ \\
+$X,Y$ & uncentered and centered data matrices; $Y=XP_n$ \\
+$S,S_D$ & feature-space and dual sample covariance matrices \\
+$m$ & signal rank, assumed fixed with $m<r$ \\
+$H_s,H_0$ & orthonormal signal and bulk eigenvector matrices \\
+$\Lambda_s,\Lambda_0$ & signal and bulk eigenvalue matrices \\
+$\tau_0$ & bulk trace $\tr(\Lambda_0)$; the mean dual-noise shift scale \\
+$q_0$ & bulk Frobenius norm $\norm{\Lambda_0}_{\F}$; quadratic fluctuation scale \\
+$b_0$ & largest noise eigenvalue $\max_{j>m}\lambda_j=\norm{\Lambda_0}_{\op}$ \\
+$Z_s,Z_0$ & standardized signal and bulk factor-score matrices \\
+$A_s$ & full-sample signal score oracle $r^{-1}P_nZ_s^\top\Lambda_sZ_sP_n$ \\
+$s_i$ & nonzero eigenvalues of $A_s$ \\
+$a_i$ & ordered nonzero empirical eigenvalues of $S_D$ \\
+$\wt\lambda_i,\wh\lambda_i^B$ & sequential NRM and oracle-rank bNRM estimators \\
+$C_D,C_s$ & cross-data matrix and its signal score-oracle part \\
+$\Delta_N,\Delta_C$ & NRM and CDM high-probability remainder bounds \\
+\bottomrule
+\end{tabular}
+\end{table}

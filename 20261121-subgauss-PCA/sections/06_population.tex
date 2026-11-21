@@ -1,0 +1,49 @@
+\section{From score oracles to population eigenvalues}\label{sec:population}
+The nonzero eigenvalues $s_i$ of $A_s$ equal those of
+\begin{equation}\label{eq:Ms}
+M_s=\Lambda_s^{1/2}\left(\frac1rZ_sP_nZ_s^\top\right)\Lambda_s^{1/2}.
+\end{equation}
+This reduction does not make $s_i$ equal to $\lambda_i$ when $n$ is fixed.
+
+\begin{example}[Rank-one fixed-score counterexample]\label{ex:rankone}
+With no bulk noise, let $x_k=\sqrt\lambda z_kh$, where $z_k\stackrel{\mathrm{iid}}{\sim}N(0,1)$ and $\norm h=1$.  The only nonzero empirical eigenvalue is
+\begin{equation}
+\wh\lambda=\frac\lambda r\sum_{k=1}^n(z_k-\bar z)^2,
+\qquad \frac{\wh\lambda}{\lambda}\sim\frac{\chi_r^2}{r}.
+\end{equation}
+The distribution does not involve $d$ and therefore cannot converge to one as $d\to\infty$ at fixed $n$.
+\end{example}
+Thus perfect bulk removal can recover a random score oracle but not, in general, a population eigenvalue.
+
+\begin{lemma}[Signal-score covariance concentration]\label{lem:scoreconcentration}
+Under SG-I, for every $u\ge0$, with probability at least $1-2e^{-u}$,
+\begin{equation}\label{eq:scoreconcentration}
+\norm{\frac1rZ_sP_nZ_s^\top-I_m}_{\op}
+\le\eps_s(u):=CK^2\left(\sqrt{\frac{m+u}{r}}+\frac{m+u}{r}\right).
+\end{equation}
+\end{lemma}
+This is the fixed-dimensional sub-Gaussian sample-covariance bound; see \citet{Vershynin2018}.  Effective-rank refinements for sample covariance operators are developed by \citet{KoltchinskiiLounici2017}.  Centering changes $n$ to $r=n-1$.
+
+\begin{theorem}[Population eigenvalue bound for bNRM]\label{thm:population}
+On the common event in Theorem~\ref{thm:dual} and Lemma~\ref{lem:scoreconcentration},
+\begin{equation}\label{eq:populationbound}
+\abs{\wh\lambda_i^B-\lambda_i}\le2\Delta_N(u)+\lambda_1\eps_s(u),
+\qquad i=1,\ldots,m.
+\end{equation}
+Consequently, in J-HDLSS, if $u_n\to\infty$, $u_n=o(n)$,
+\begin{equation}
+\frac{\Delta_N(u_n)}{\lambda_i}\to0,
+\qquad
+\frac{\lambda_1}{\lambda_i}\left(\sqrt{\frac{m+u_n}{r}}+\frac{m+u_n}{r}\right)\to0,
+\end{equation}
+then $\wh\lambda_i^B/\lambda_i\xrightarrow{p}1$.
+\end{theorem}
+\begin{proof}
+Equation~\eqref{eq:Ms} and submultiplicativity yield $\norm{M_s-\Lambda_s}_{\op}\le\lambda_1\eps_s(u)$.  Weyl's inequality gives $\abs{s_i-\lambda_i}\le\lambda_1\eps_s(u)$.  Combine this with Theorem~\ref{thm:oracle} and use the triangle inequality.  The asymptotic conclusion follows after division by $\lambda_i$; the failure probability tends to zero because $u_n\to\infty$.
+\end{proof}
+
+Sequential NRM requires the additional population-scale condition
+\begin{equation}
+\frac1{(r-i)\lambda_i}\sum_{j=i+1}^m\lambda_j\to0.
+\end{equation}
+For fixed $m$, $n\to\infty$, and bounded spike ratios, this term is $O(n^{-1})$.

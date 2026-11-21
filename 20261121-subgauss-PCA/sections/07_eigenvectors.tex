@@ -1,0 +1,24 @@
+\section{Eigenvectors require the trace scale}\label{sec:eigenvectors}
+Eigenvalue recovery depends on fluctuations of quadratic forms and is governed by $q_0$ and $b_0$.  Feature-space directions contain the full bulk energy and therefore depend on $\tau_0$.
+
+Consider $m=1$, with signal eigenvector $h$ and eigenvalue $\lambda$.  Let $a=P_nz_s$, $v=a/\norm a$ when $a\ne0$, and define the oracle reconstruction $q=XP_nv=Xv$.  Then
+\begin{equation}
+q=\sqrt\lambda\,\norm a\,h+\eta,
+\qquad \eta=H_0\Lambda_0^{1/2}Z_0v,
+\qquad h^\top\eta=0.
+\end{equation}
+\begin{proposition}[Exact rank-one angle identity]\label{prop:angle}
+Let $\wh h=q/\norm q$.  Then
+\begin{equation}\label{eq:angle}
+\sin^2\angle(\wh h,h)=\frac{\norm\eta^2}{\lambda\norm a^2+\norm\eta^2}.
+\end{equation}
+Conditionally on $v$, $\mathbb{E}(\norm\eta^2\mid v)=\tau_0$ and, with probability at least $1-2e^{-u}$,
+\begin{equation}\label{eq:anglenoise}
+\abs{\norm\eta^2-\tau_0}\le CK^2(q_0\sqrt u+b_0u).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Orthogonality gives $\norm q^2=\lambda\norm a^2+\norm\eta^2$ and $\abs{h^\top\wh h}^2=\lambda\norm a^2/\norm q^2$, proving \eqref{eq:angle}.  Conditional on $v$, each coordinate of $Z_0v$ is mean-zero, variance-one, and sub-Gaussian, while coordinates are independent across the bulk index.  Hence $\norm\eta^2=(Z_0v)^\top\Lambda_0(Z_0v)$, and Lemma~\ref{lem:hw} gives \eqref{eq:anglenoise}.
+\end{proof}
+
+At fixed $n$, a sufficient scale for the oracle angle to vanish is roughly $\tau_0/\lambda\to0$, whereas eigenvalue separation may hold under $q_0/\lambda\to0$.  For an isotropic bulk, $\tau_0\asymp d$ but $q_0\asymp\sqrt d$.  Transferring Proposition~\ref{prop:angle} from the oracle score direction to an empirical eigenvector additionally requires an eigengap and a Davis--Kahan argument \citep{DavisKahan1970,YuWangSamworth2015}.

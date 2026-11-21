@@ -1,0 +1,46 @@
+\section{High-probability dual decomposition}\label{sec:dual}
+Let $Z_s=[z_{s,1},\ldots,z_{s,n}]$ and $Z_0=[z_{0,1},\ldots,z_{0,n}]$.  Orthogonality in \eqref{eq:covsplit} implies the exact identity
+\begin{equation}\label{eq:gramsplit}
+X^\top X=Z_s^\top\Lambda_sZ_s+Z_0^\top\Lambda_0Z_0.
+\end{equation}
+\begin{theorem}[Dual bulk decomposition]\label{thm:dual}
+Assume SG-I and let $u\ge0$.  Put
+\begin{equation}
+L_N(u,n)=u+\log(2n^2),\qquad
+\Delta_N(u)=\frac{CK^2n}{r}\left\{q_0\sqrt{L_N(u,n)}+b_0L_N(u,n)\right\}.
+\end{equation}
+Then, with probability at least $1-2e^{-u}$,
+\begin{equation}\label{eq:dualdecomp}
+S_D=A_s+\frac{\tau_0}{r}P_n+E_N,
+\qquad A_s=\frac1rP_nZ_s^\top\Lambda_sZ_sP_n,
+\qquad \norm{E_N}_{\op}\le\Delta_N(u).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Write $G_0=Z_0^\top\Lambda_0Z_0$.  For its diagonal entries, coordinate independence and unit variance give $\mathbb{E}(G_0)_{jj}=\tau_0$; observation independence gives $\mathbb{E}(G_0)_{jk}=0$ when $j\ne k$.  Hence $\mathbb{E}G_0=\tau_0I_n$.
+
+Lemma~\ref{lem:hw} bounds every diagonal entry of $G_0-\tau_0I_n$, and Lemma~\ref{lem:bilinear} bounds every off-diagonal entry.  With $L=L_N(u,n)$, a union bound over at most $n^2$ entries gives, after changing the absolute constant,
+\begin{equation}
+\max_{j,k}\abs{(G_0-\tau_0I_n)_{jk}}
+\le CK^2\{q_0\sqrt L+b_0L\}
+\end{equation}
+with probability at least $1-2e^{-u}$.  Since $\norm{M}_{\op}\le n\max_{j,k}\abs{M_{jk}}$ and $P_n$ is an orthogonal projection,
+\begin{equation}
+\norm{r^{-1}P_n(G_0-\tau_0I_n)P_n}_{\op}\le\Delta_N(u).
+\end{equation}
+Substitution into $S_D=r^{-1}P_nX^\top XP_n$ using \eqref{eq:gramsplit} and $P_n^2=P_n$ proves the result.
+\end{proof}
+
+\begin{corollary}[Fixed-$n$ spherical bulk]\label{cor:spherical}
+In F-HDLSS, suppose $q_0/\tau_0\to0$ and $b_0/\tau_0\to0$.  Then
+\begin{equation}
+\frac{r}{\tau_0}(S_D-A_s)\xrightarrow{p}P_n.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Fix $\eps>0$ and choose $u$ so that $2e^{-u}<\eps/2$.  Since $n$ is fixed, $L_N(u,n)$ is fixed and $\Delta_N(u)/\tau_0\to0$.  The event in Theorem~\ref{thm:dual} then implies the stated convergence, while its complement has probability below $\eps/2$.
+\end{proof}
+
+\begin{remark}
+The factor $n$ in $\Delta_N$ comes from the transparent but conservative maximum-entry inequality.  Direct matrix concentration may improve the dependence on $n$; this is not needed for the fixed-$n$ conclusions.
+\end{remark}

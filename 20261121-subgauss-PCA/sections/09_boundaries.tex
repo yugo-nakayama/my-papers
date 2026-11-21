@@ -1,0 +1,12 @@
+\section{Failure modes and power-spiked interpretation}\label{sec:boundaries}
+\subsection{Directional sub-Gaussianity is insufficient}
+Let $u$ be uniform on the sphere of radius $\sqrt d$ in $\R^d$ and let $R$ be independent with $R^2=1/2$ or $3/2$, each with probability $1/2$.  Then $x=Ru$ is isotropic and directionally sub-Gaussian, but $\norm x^2/d=R^2$ never concentrates at one.  Thus directional linear tails alone do not imply the bulk Gram concentration in Theorem~\ref{thm:dual}.
+
+\subsection{Rank misspecification and repeated eigenvalues}
+If $\wh m<m$, an omitted spike enters the lower-eigenvalue average and causes over-subtraction.  If $\wh m>m$, some noise eigenvalues are retained as signal.  The bNRM bound is therefore conditional on correct rank information.  When population eigenvalues repeat, individual eigenvectors are not identifiable; the appropriate target is the spectral projection onto the repeated eigenspace.
+
+\subsection{Heavy tails}
+Finite fourth moments do not imply sub-Gaussian tails.  Under heavy tails, the exponential inequalities here may fail, and robust Gram entries, truncation, median-of-means constructions, or robust covariance operators are needed.  This limitation distinguishes SG-I from parts of the Aoshima--Yata theory that use fourth-moment assumptions.
+
+\subsection{Power-spiked models}
+Suppose $\lambda_i=a_id^{\alpha_i}$ for $i\le m$ and $0<c_-\le\lambda_j\le c_+$ for $j>m$.  Then $\tau_0\asymp d$, $q_0\asymp\sqrt d$, and $b_0\asymp1$.  Ignoring logarithmic factors, the bulk fluctuation suggests eigenvalue recovery when $\alpha_i>1/2$, while fixed-$n$ rank-one direction recovery requires approximately $\alpha_i>1$.  These are heuristic phase boundaries: boundary exponents require sharper constants or limiting distributions, and growing $n$ relaxes the direction scale to approximately $\tau_0/(n\lambda_i)$.
