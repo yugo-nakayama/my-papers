@@ -1,5 +1,13 @@
 # Spiked SVM under HDLSS — arXiv manuscript
 
+[![arXiv](https://img.shields.io/badge/arXiv-2609.39173-b31b1b.svg)](https://arxiv.org/abs/2609.39173)
+
+- **arXiv**: [arXiv:2609.39173](https://arxiv.org/abs/2609.39173) [stat.ML]
+- **Title**: Asymptotic properties of support vector machines in high-dimension, low-sample-size settings under a spiked model
+- **Author**: Yugo Nakayama
+
+---
+
 ## Build the PDF
 
 ```bash

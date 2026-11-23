@@ -1,5 +1,13 @@
 # Outliers and the Hard-Margin Linear SVM — arXiv source
 
+[![arXiv](https://img.shields.io/badge/arXiv-2611.13869-b31b1b.svg)](https://arxiv.org/abs/2611.13869)
+
+- **arXiv**: [arXiv:2611.13869](https://arxiv.org/abs/2611.13869) [stat.ML]
+- **Title**: Outliers and the Hard-Margin Linear SVM in High-Dimension, Low-Sample-Size Settings
+- **Author**: Yugo Nakayama
+
+---
+
 This directory is a self-contained manuscript project following the modular layout of `yugo-nakayama/my-papers`.
 
 ## Build
